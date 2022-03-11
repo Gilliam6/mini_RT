@@ -11,6 +11,9 @@
 # define WIN_SIZE_WIDTH		1024.0
 # define WIN_SIZE_HEIGHT	800.0
 
+//BUTTONS
+# define ESC_BUTTON			53
+
 typedef struct s_data {
 	void	*img;
 	char	*addr;
@@ -25,4 +28,8 @@ typedef struct s_tracer
 	void			*win;
 	t_img_data		*img;
 }				t_tracer;
+
+//HOOKS
+int	keyboard_hook(int key, t_tracer *rt);
+
 #endif
