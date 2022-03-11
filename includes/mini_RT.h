@@ -24,6 +24,36 @@ typedef struct s_data {
 	int		endian;
 }				t_img_data;
 
+typedef struct s_a_light
+{
+
+};
+
+typedef struct s_light
+{
+
+};
+
+typedef struct s_camera
+{
+
+};
+
+typedef struct s_sphere
+{
+
+};
+
+typedef struct s_plane
+{
+
+};
+
+typedef struct s_cylinder
+{
+
+};
+
 typedef struct s_tracer
 {
 	void			*mlx;

@@ -10,5 +10,6 @@ int	parse_rt_file(t_tracer *rt, char *path)
 		return (0);
 	get_next_line(fd, &line);
 	printf("%s\n", line);
+	close(fd);
 	return (1);
 }
