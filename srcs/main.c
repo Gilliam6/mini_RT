@@ -3,7 +3,13 @@
 int	unexpected_exit(const char *str)
 {
 	printf("%s", str);
-	return (1);
+	exit (1);
+}
+
+void	hooks_extension(t_tracer rt)
+{
+	mlx_hook(rt.win, 2, 1L << 0, keyboard_hook, &rt);
+	mlx_hook(rt.win, 17, 0L, destroy_window, &rt);
 }
 
 int main(int argc, char **argv)
@@ -16,8 +22,7 @@ int main(int argc, char **argv)
 	rt.mlx = mlx_init();
 	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
 
-	mlx_hook(rt.win, 2, 1L << 0, keyboard_hook, &rt);
-	mlx_hook(rt.win, 17, 0L, destroy_window, &rt);
+	hooks_extension(rt);
 	mlx_loop(rt.mlx);
 	return (0);
 }
