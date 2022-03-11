@@ -7,9 +7,20 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
+
+//PARCER ITEMS
+# define LIGHT				"L"
+# define AMBIENT			"A"
+# define CAMERA				"C"
+# define SPHERE				"sp"
+# define PLANE				"pl"
+# define CYLINDER			"cy"
+
+//ERR CODES
 # define ARG_ERR			"Invalid number of arguments\n"
 # define FILE_ERR			"Error\n"
 
+//WINDOW SETTINGS
 # define WIN_SIZE_WIDTH		1024.0
 # define WIN_SIZE_HEIGHT	800.0
 
@@ -38,7 +49,6 @@ typedef struct s_coordinate {
 
 typedef struct s_light
 {
-	char		*indent;
 	t_coord		xyz;
 	double 		bright;
 	t_color		color;
@@ -46,7 +56,6 @@ typedef struct s_light
 
 typedef struct s_camera
 {
-	char		*indent;
 	t_coord		xyz;
 	t_coord 	vector;
 	int			FOV;
@@ -54,14 +63,12 @@ typedef struct s_camera
 
 typedef struct s_ambient
 {
-	char		*indent;
 	t_color		color;
 	double		bright;
 }				t_ambient;
 
 typedef struct s_sphere
 {
-	char		*indent;
 	t_color		color;
 	t_coord		xyz;
 	double		diameter;
@@ -69,7 +76,6 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	char		*indent;
 	t_color		color;
 	t_coord		xyz;
 	t_coord		vector;
@@ -77,15 +83,12 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	char		*indent;
 	t_color		color;
 	t_coord		xyz;
 	t_coord		vector;
 	double		height;
 	double		diameter;
 }				t_cylinder;
-
-
 
 typedef struct s_tracer
 {
@@ -98,6 +101,7 @@ typedef struct s_tracer
 	t_light			*light;
 	t_plane			*plane;
 	t_sphere		*sphere;
+	unsigned char	parsing_type;
 }				t_tracer;
 
 //HOOKS
@@ -106,5 +110,6 @@ int destroy_window(t_tracer *rt);
 
 //PARSER
 int	parse_rt_file(t_tracer *rt, char *path);
+int	check_indentifier(char *indent, t_tracer *rt);
 
 #endif

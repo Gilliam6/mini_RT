@@ -1,4 +1,4 @@
-SRCS_LIST = main.c basic_hooks.c parser.c
+SRCS_LIST = main.c basic_hooks.c parser.c check_line.c
 SRCS_DIR = srcs/
 SRCS_DIR_BONUS = srcs_b/
 
