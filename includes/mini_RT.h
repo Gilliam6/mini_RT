@@ -31,5 +31,6 @@ typedef struct s_tracer
 
 //HOOKS
 int	keyboard_hook(int key, t_tracer *rt);
+int destroy_window(t_tracer *rt);
 
 #endif

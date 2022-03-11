@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
 
 	mlx_hook(rt.win, 2, 1L << 0, keyboard_hook, &rt);
+	mlx_hook(rt.win, 17, 0L, destroy_window, &rt);
 	mlx_loop(rt.mlx);
 	return (0);
 }
