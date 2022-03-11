@@ -19,6 +19,8 @@ int main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2)
 		unexpected_exit(ARG_ERR);
+	if (!parse_rt_file(&rt, argv[1]))
+		unexpected_exit(FILE_ERR);
 	rt.mlx = mlx_init();
 	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
 

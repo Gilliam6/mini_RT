@@ -17,7 +17,19 @@
 # include	<ctype.h>
 # include	<unistd.h>
 # include	<stdio.h>
+# define BUFFER_SIZE 1024
 
+typedef struct s_list
+{
+	int				fd;
+	char			*content;
+	int				result;
+	struct s_list	*next;
+}	t_list;
+char	*ft_custom_strjoin(char *content, char *buf);
+t_list	*ft_lst_new_elem(int fd);
+int		get_next_line(int fd, char **line);
+char	*ft_free_strjoin(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_putchar_fd(char c, int fd);
@@ -31,7 +43,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strdup(const char *s1);
-void	*calloc(size_t count, size_t size);
 int		ft_strlen(char *str);
 int		ft_isdigit(int d);
 int		ft_isalnum(int d);

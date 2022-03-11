@@ -8,6 +8,8 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # define ARG_ERR			"Invalid number of arguments\n"
+# define FILE_ERR			"Error\n"
+
 # define WIN_SIZE_WIDTH		1024.0
 # define WIN_SIZE_HEIGHT	800.0
 
@@ -32,5 +34,8 @@ typedef struct s_tracer
 //HOOKS
 int	keyboard_hook(int key, t_tracer *rt);
 int destroy_window(t_tracer *rt);
+
+//PARSER
+int	parse_rt_file(t_tracer *rt, char *path);
 
 #endif
