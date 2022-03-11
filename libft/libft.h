@@ -64,4 +64,6 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s1, int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+int		ft_strcmp(const char *s1, const char *s2);
+
 #endif

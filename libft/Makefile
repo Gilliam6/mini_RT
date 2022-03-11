@@ -33,7 +33,9 @@ SOURCE	=	ft_atoi.c \
 			ft_tolower.c \
 			ft_toupper.c \
 			get_next_line.c \
-			get_next_line_utils.c
+			get_next_line_utils.c \
+			ft_strcmp.c
+
 
 BONUS	=	ft_lstadd_back.c \
 			ft_lstadd_front.c \
