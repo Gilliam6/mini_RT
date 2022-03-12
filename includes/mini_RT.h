@@ -113,6 +113,7 @@ int 	destroy_window(t_tracer *rt);
 int		parse_rt_file(t_tracer *rt, char *path);
 int		check_indentifier(char *indent, t_tracer *rt);
 int		check_xyz(char **xyz);
+int		check_diameter(double diameter);
 int		stop_parse(char **xyz);
 
 int		fill_object(char **split, t_tracer *rt);
@@ -121,6 +122,7 @@ int		fill_struct(char **split, t_tracer *rt);
 int		fill_ambient(char **split, t_tracer *rt);
 int		fill_camera(char **split, t_tracer *rt);
 int		fill_light(char **split, t_tracer *rt);
+int		fill_sphere(char **split, t_tracer *rt);
 
 double	parse_bright(char **split);
 t_color	parse_colors(char **split);

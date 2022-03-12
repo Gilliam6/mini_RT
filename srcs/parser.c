@@ -24,12 +24,11 @@ int	parse_rt_file(t_tracer *rt, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
-	for (int i = 0; i < 3; i++)
-	{
-		get_next_line(fd, &line);
+
+	while (get_next_line(fd, &line))
 		if (!process_line(rt, line))
 			return (0);
-	}
+
 	printf("AMBIENT LIGHT\n%d r %d g %d b\n%f bright\n", rt->ambient->color.R,
 		   rt->ambient->color.G, rt->ambient->color.B,
 		   rt->ambient->bright);
@@ -42,6 +41,11 @@ int	parse_rt_file(t_tracer *rt, char *path)
 		   rt->light->color.G, rt->light->color.B,
 		   rt->light->bright, rt->light->xyz.x,rt->light->xyz.y,
 		   rt->light->xyz.z);
+	printf("SPHERE\n%d r %d g %d b COLOR\n%f DIAMETER\n%f x %f y %f z XYZ\n",
+		   rt->sphere->color.R,
+		   rt->sphere->color.G, rt->sphere->color.B,
+		   rt->sphere->diameter, rt->sphere->xyz.x,rt->sphere->xyz.y,
+		   rt->sphere->xyz.z);
 	close(fd);
 	return (1);
 }
