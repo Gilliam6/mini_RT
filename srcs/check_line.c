@@ -28,8 +28,8 @@ int	fill_struct(char **split, t_tracer *rt)
 		return (fill_light(split, rt));
 	else if (rt->parsing_type == 4)
 		return (fill_sphere(split, rt));
-//	else if (rt->parsing_type == 5)
-//		return (fill_plane(split, rt));
+	else if (rt->parsing_type == 5)
+		return (fill_plane(split, rt));
 //	else if (rt->parsing_type == 6)
 //		return (fill_cylinder(split, rt));
 	return (1);

@@ -23,3 +23,19 @@ int	fill_sphere(char **split, t_tracer *rt)
 		return (0);
 	return (1);
 }
+
+int	fill_plane(char **split, t_tracer *rt)
+{
+	t_plane	*plane;
+
+	plane = malloc(sizeof(t_plane));
+	if (!plane)
+		return (0);
+	rt->plane = plane;
+	if (!parse_coordinates(split++, rt) || !parse_vector(split++, rt))
+		return (0);
+	plane->color = parse_colors(split++);
+	if (plane->color.R == -1)
+		return (0);
+	return (1);
+}

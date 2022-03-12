@@ -46,6 +46,13 @@ int	parse_rt_file(t_tracer *rt, char *path)
 		   rt->sphere->color.G, rt->sphere->color.B,
 		   rt->sphere->diameter, rt->sphere->xyz.x,rt->sphere->xyz.y,
 		   rt->sphere->xyz.z);
+	printf("PLANE\n%d r %d g %d b COLOR\n%f x %f y %f z VECTOR\n%f x %f y %f"
+		   " z XYZ\n",
+		   rt->plane->color.R,
+		   rt->plane->color.G, rt->plane->color.B,
+		   rt->plane->vector.x, rt->plane->vector.y,rt->plane->vector.z,
+		   rt->plane->xyz.x,rt->plane->xyz.y,
+		   rt->plane->xyz.z);
 	close(fd);
 	return (1);
 }
