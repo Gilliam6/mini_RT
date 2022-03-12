@@ -44,5 +44,6 @@ int main(int argc, char **argv)
 
 	hooks_extension(rt);
 	mlx_loop(rt.mlx);
+	free_main_struct(&rt);
 	return (0);
 }

@@ -9,6 +9,8 @@ int	process_line(t_tracer *rt, char *line)
 	if (!split)
 		return (0);
 	tmp = split;
+	if (!split[0])
+		return (-1);
 	if (!check_indentifier(tmp[0], rt))
 		return (0);
 	if (!fill_struct(++tmp, rt))
@@ -20,14 +22,20 @@ int	parse_rt_file(t_tracer *rt, char *path)
 {
 	int	fd;
 	char *line;
+	int i;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
 
 	while (get_next_line(fd, &line))
-		if (!process_line(rt, line))
+	{
+		i = process_line(rt, line);
+		if (i < 0)
+			continue;
+		if (!i)
 			return (0);
+	}
 	if (!process_line(rt, line))
 		return (0);
 	printf("AMBIENT LIGHT\n%d r %d g %d b\n%f bright\n", rt->ambient->color.R,
