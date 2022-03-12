@@ -27,11 +27,13 @@ int	parse_rt_file(t_tracer *rt, char *path)
 		if (!process_line(rt, line))
 			return (0);
 	}
-	printf("%d r %d g %d b\n%f bright\n", rt->ambient->color.R,
+	printf("AMBIENT LIGHT\n%d r %d g %d b\n%f bright\n", rt->ambient->color.R,
 		   rt->ambient->color.G, rt->ambient->color.B,
 		   rt->ambient->bright);
-	printf("%f x %f y %f x\n", rt->camera->xyz.x,
-		   rt->camera->xyz.y, rt->camera->xyz.z);
+	printf("CAMERA\n%f x %f y %f x XYZ\n%f x %f y %f z VECTOR\n",
+		   rt->camera->xyz.x,
+		   rt->camera->xyz.y, rt->camera->xyz.z, rt->camera->vector.x,
+		   rt->camera->vector.y, rt->camera->vector.z);
 	close(fd);
 	return (1);
 }

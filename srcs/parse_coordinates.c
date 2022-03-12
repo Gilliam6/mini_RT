@@ -37,10 +37,20 @@ int	check_xyz(char **xyz)
 	return (j == 3);
 }
 
-int	stop_parse_coord(char **xyz)
+int	stop_parse(char **xyz)
 {
+	int	i;
+
 	if (xyz)
+	{
+		i = 0;
+		while (xyz[i])
+		{
+			free(xyz[i]);
+			i++;
+		}
 		free(xyz);
+	}
 	return (0);
 }
 
@@ -48,15 +58,15 @@ int	parse_coordinates(char **split, t_tracer *rt)
 {
 	t_coord	coord;
 	char	**xyz;
-	(void) rt;
+
 	xyz = ft_split(split[0], ',');
 	if (!xyz || !check_xyz(xyz))
-		return (stop_parse_coord(xyz));
+		return (stop_parse(xyz));
 	coord.x = ft_atod(xyz[0]);
 	coord.y = ft_atod(xyz[1]);
 	coord.z = ft_atod(xyz[2]);
 	if (xyz[3])
-		return (stop_parse_coord(xyz));
+		return (stop_parse(xyz));
 	rt->camera->xyz = coord;
 	return (1);
 }

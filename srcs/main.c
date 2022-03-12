@@ -1,7 +1,8 @@
 #include "../includes/mini_RT.h"
 
-int	unexpected_exit(const char *str)
+int	unexpected_exit(const char *str, t_tracer *rt)
 {
+	free_main_struct(rt);
 	printf("%s", str);
 	exit (1);
 }
@@ -34,10 +35,10 @@ int main(int argc, char **argv)
 	t_tracer	rt;
 
 	if (argc != 2)
-		unexpected_exit(ARG_ERR);
+		unexpected_exit(ARG_ERR, &rt);
 	rt = init_rt();
 	if (!parse_rt_file(&rt, argv[1]))
-		unexpected_exit(FILE_ERR);
+		unexpected_exit(FILE_ERR, &rt);
 	rt.mlx = mlx_init();
 	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
 

@@ -27,10 +27,7 @@ int	fill_camera(char **split, t_tracer *rt)
 	if (!cam)
 		return (0);
 	rt->camera = cam;
-	if (!parse_coordinates(split++, rt))
-	{
-		free(cam);
+	if (!parse_coordinates(split++, rt) || !parse_vector(split++, rt))
 		return (0);
-	}
 	return (1);
 }
