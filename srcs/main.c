@@ -12,13 +12,30 @@ void	hooks_extension(t_tracer rt)
 	mlx_hook(rt.win, 17, 0L, destroy_window, &rt);
 }
 
+t_tracer	init_rt()
+{
+	t_tracer	rt;
+
+	rt.mlx = 0;
+	rt.win = 0;
+	rt.light = 0;
+	rt.sphere = 0;
+	rt.plane = 0;
+	rt.cyl = 0;
+	rt.camera = 0;
+	rt.parsing_type = 0;
+	rt.img = 0;
+	rt.ambient = 0;
+	return (rt);
+}
+
 int main(int argc, char **argv)
 {
 	t_tracer	rt;
 
-	(void)argv;
 	if (argc != 2)
 		unexpected_exit(ARG_ERR);
+	rt = init_rt();
 	if (!parse_rt_file(&rt, argv[1]))
 		unexpected_exit(FILE_ERR);
 	rt.mlx = mlx_init();

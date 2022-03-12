@@ -22,8 +22,8 @@ int	fill_struct(char **split, t_tracer *rt)
 {
 	if (rt->parsing_type == 1)
 		return (fill_ambient(split, rt));
-//	else if (rt->parsing_type == 2)
-//		return (fill_camera(split, rt));
+	else if (rt->parsing_type == 2)
+		return (fill_camera(split, rt));
 //	else if (rt->parsing_type == 3)
 //		return (fill_light(split, rt));
 //	else if (rt->parsing_type == 4)

@@ -1,4 +1,6 @@
-SRCS_LIST = main.c basic_hooks.c parser.c check_line.c fill_object.c fill_environ.c parse_utilities.c
+SRCS_LIST = main.c basic_hooks.c parser.c check_line.c fill_object.c fill_environ.c parse_bright.c utilities.c \
+parse_coordinates.c pase_colors.c
+
 SRCS_DIR = srcs/
 SRCS_DIR_BONUS = srcs_b/
 

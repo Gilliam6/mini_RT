@@ -106,18 +106,25 @@ typedef struct s_tracer
 }				t_tracer;
 
 //HOOKS
-int	keyboard_hook(int key, t_tracer *rt);
-int destroy_window(t_tracer *rt);
+int		keyboard_hook(int key, t_tracer *rt);
+int 	destroy_window(t_tracer *rt);
 
 //PARSER
-int	parse_rt_file(t_tracer *rt, char *path);
-int	check_indentifier(char *indent, t_tracer *rt);
-int	fill_object(char **split, t_tracer *rt);
-int	fill_environ(char **split, t_tracer *rt);
-int	fill_struct(char **split, t_tracer *rt);
-int	fill_ambient(char **split, t_tracer *rt);
+int		parse_rt_file(t_tracer *rt, char *path);
+int		check_indentifier(char *indent, t_tracer *rt);
+int		fill_object(char **split, t_tracer *rt);
+int		fill_environ(char **split, t_tracer *rt);
+int		fill_struct(char **split, t_tracer *rt);
+int		fill_ambient(char **split, t_tracer *rt);
+int		fill_camera(char **split, t_tracer *rt);
+
 double	parse_bright(char **split);
 t_color	parse_colors(char **split);
+int		parse_coordinates(char **split, t_tracer *rt);
+
+//UTILITIES
+double	ft_atod(char *str); //string to double convert
+
 
 //MAIN
 int	unexpected_exit(const char *str);
