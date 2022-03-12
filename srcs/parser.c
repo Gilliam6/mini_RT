@@ -21,9 +21,12 @@ int	parse_rt_file(t_tracer *rt, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
-	while (get_next_line(fd, &line))
+	get_next_line(fd, &line);
 		if (!process_line(rt, line))
 			return (0);
+	printf("%d r %d g %d b\n%f bright\n", rt->ambient->color.R,
+		   rt->ambient->color.G, rt->ambient->color.B,
+		   rt->ambient->bright);
 	close(fd);
 	return (1);
 }

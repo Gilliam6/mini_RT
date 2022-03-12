@@ -11,7 +11,7 @@ int	check_colors(t_color color)
 	return (1);
 }
 
-t_color	parse_colors(char **split, t_tracer *rt)
+t_color	parse_colors(char **split)
 {
 	char		**rgb;
 	t_color 	color;
@@ -21,37 +21,48 @@ t_color	parse_colors(char **split, t_tracer *rt)
 	color.G = ft_atoi(rgb[1]);
 	color.B = ft_atoi(rgb[2]);
 	if (rgb[3] || !check_colors(color))
-		return (0);
+	{
+		color.R = -1;
+		color.B = -1;
+		color.G = -1;
+	}
 	return (color);
 }
 
 double	ft_atod(char *str)
 {
 	double	result;
-	int		del;
-	int 	minus;
+	double	del;
+	double 	minus;
 
-	result = 0;
+	result = 0.0;
+	minus = 1.0;
 	if (*str == '-')
-		minus = -1;
+		minus = -1.0;
 	while (*str && *str != '.')
 	{
 		result *= 10;
 		result += *str - '0';
 		str++;
 	}
-	if (*str != '.')
+	if (*str != '.' || !*++str)
 		unexpected_exit(PARSE_ERR);
-	del = 10;
+	del = 1;
 	while (*str)
 	{
-		result += (*str - '0') / del;
 		del *= 10;
+		result += (*str - '0') / del;
 		str++;
 	}
-
+	return (minus * result);
 }
-double	parse_bright(char **split, t_tracer *rt)
+
+double	parse_bright(char **split)
 {
-	ft_atod(split[0])
+	double	bright;
+
+	bright = ft_atod(split[0]);
+	if (bright < 0.0 || bright > 1.0)
+		unexpected_exit(PARSE_ERR);
+	return (bright);
 }

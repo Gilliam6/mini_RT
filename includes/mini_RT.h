@@ -116,8 +116,8 @@ int	fill_object(char **split, t_tracer *rt);
 int	fill_environ(char **split, t_tracer *rt);
 int	fill_struct(char **split, t_tracer *rt);
 int	fill_ambient(char **split, t_tracer *rt);
-double	parse_bright(char **split, t_tracer *rt);
-t_color	parse_colors(char **split, t_tracer *rt);
+double	parse_bright(char **split);
+t_color	parse_colors(char **split);
 
 //MAIN
 int	unexpected_exit(const char *str);

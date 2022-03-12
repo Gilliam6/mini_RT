@@ -2,11 +2,17 @@
 
 int	fill_ambient(char **split, t_tracer *rt)
 {
-	rt->ambient->color = parse_colors(split++, rt);
-	if (rt->ambient->color)
+	t_ambient	*amb;
+
+	amb = malloc(sizeof(t_tracer));
+	amb->bright = parse_bright(split++);
+	amb->color = parse_colors(split++);
+	if (amb->bright < 0 || amb->color.R == -1)
+	{
+		free(amb);
 		return (0);
-	rt->ambient->bright = parse_bright(split++, rt);
-	if (rt->ambient->bright < 0)
-		return (0);
-	return (!split);
+	}
+	else
+		rt->ambient = amb;
+	return (*split == 0);
 }
