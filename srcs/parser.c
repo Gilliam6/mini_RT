@@ -7,8 +7,8 @@ int	process_line(t_tracer *rt, char *line)
 	split = ft_split(line, ' ');
 	if (!check_indentifier(split[0], rt))
 		return (0);
-//	if (!process_line(++split, rt))
-//		return (0);
+	if (!fill_struct(++split, rt))
+		return (0);
 //	printf("%d indentifier\n", rt->parsing_type);
 	return (1);
 }

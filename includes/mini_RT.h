@@ -19,6 +19,7 @@
 //ERR CODES
 # define ARG_ERR			"Invalid number of arguments\n"
 # define FILE_ERR			"Error\n"
+# define PARSE_ERR			"File parse Error\n"
 
 //WINDOW SETTINGS
 # define WIN_SIZE_WIDTH		1024.0
@@ -36,9 +37,9 @@ typedef struct s_data {
 }				t_img_data;
 
 typedef struct s_color {
-	unsigned char R;
-	unsigned char G;
-	unsigned char B;
+	int R;
+	int G;
+	int B;
 }				t_color;
 
 typedef struct s_coordinate {
@@ -111,5 +112,14 @@ int destroy_window(t_tracer *rt);
 //PARSER
 int	parse_rt_file(t_tracer *rt, char *path);
 int	check_indentifier(char *indent, t_tracer *rt);
+int	fill_object(char **split, t_tracer *rt);
+int	fill_environ(char **split, t_tracer *rt);
+int	fill_struct(char **split, t_tracer *rt);
+int	fill_ambient(char **split, t_tracer *rt);
+double	parse_bright(char **split, t_tracer *rt);
+t_color	parse_colors(char **split, t_tracer *rt);
+
+//MAIN
+int	unexpected_exit(const char *str);
 
 #endif

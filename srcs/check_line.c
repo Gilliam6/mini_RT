@@ -18,18 +18,19 @@ int	check_indentifier(char *indent, t_tracer *rt)
 	return (rt->parsing_type);
 }
 
-int	process_line(char **split, t_tracer *rt)
+int	fill_struct(char **split, t_tracer *rt)
 {
 	if (rt->parsing_type == 1)
 		return (fill_ambient(split, rt));
-	else if (rt->parsing_type == 2)
-		return (fill_camera(split, rt));
-	else if (rt->parsing_type == 3)
-		return (fill_light(split, rt));
-	else if (rt->parsing_type == 4)
-		return (fill_sphere(split, rt));
-	else if (rt->parsing_type == 5)
-		return (fill_plane(split, rt));
-	else if (rt->parsing_type == 6)
-		return (fill_cylinder(split, rt));
+//	else if (rt->parsing_type == 2)
+//		return (fill_camera(split, rt));
+//	else if (rt->parsing_type == 3)
+//		return (fill_light(split, rt));
+//	else if (rt->parsing_type == 4)
+//		return (fill_sphere(split, rt));
+//	else if (rt->parsing_type == 5)
+//		return (fill_plane(split, rt));
+//	else if (rt->parsing_type == 6)
+//		return (fill_cylinder(split, rt));
+	return (1);
 }
