@@ -120,11 +120,13 @@ int		fill_environ(char **split, t_tracer *rt);
 int		fill_struct(char **split, t_tracer *rt);
 int		fill_ambient(char **split, t_tracer *rt);
 int		fill_camera(char **split, t_tracer *rt);
+int		fill_light(char **split, t_tracer *rt);
 
 double	parse_bright(char **split);
 t_color	parse_colors(char **split);
 int		parse_coordinates(char **split, t_tracer *rt);
 int		parse_vector(char **split, t_tracer *rt);
+int		parse_fov(char **split, t_tracer *rt);
 
 //UTILITIES
 double	ft_atod(char *str); //string to double convert

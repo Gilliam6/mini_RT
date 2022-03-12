@@ -30,10 +30,10 @@ int	parse_rt_file(t_tracer *rt, char *path)
 	printf("AMBIENT LIGHT\n%d r %d g %d b\n%f bright\n", rt->ambient->color.R,
 		   rt->ambient->color.G, rt->ambient->color.B,
 		   rt->ambient->bright);
-	printf("CAMERA\n%f x %f y %f x XYZ\n%f x %f y %f z VECTOR\n",
+	printf("CAMERA\n%f x %f y %f x XYZ\n%f x %f y %f z VECTOR\n%d FOV\n",
 		   rt->camera->xyz.x,
 		   rt->camera->xyz.y, rt->camera->xyz.z, rt->camera->vector.x,
-		   rt->camera->vector.y, rt->camera->vector.z);
+		   rt->camera->vector.y, rt->camera->vector.z, rt->camera->FOV);
 	close(fd);
 	return (1);
 }
