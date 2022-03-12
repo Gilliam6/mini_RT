@@ -3,14 +3,17 @@
 int	process_line(t_tracer *rt, char *line)
 {
 	char	**split;
+	char	**tmp;
 
 	split = ft_split(line, ' ');
-	if (!check_indentifier(split[0], rt))
+	if (!split)
 		return (0);
-	if (!fill_struct(++split, rt))
+	tmp = split;
+	if (!check_indentifier(tmp[0], rt))
 		return (0);
-//	printf("%d indentifier\n", rt->parsing_type);
-	return (1);
+	if (!fill_struct(++tmp, rt))
+		return (0);
+	return (!stop_parse(split));
 }
 
 int	parse_rt_file(t_tracer *rt, char *path)
@@ -21,7 +24,7 @@ int	parse_rt_file(t_tracer *rt, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		get_next_line(fd, &line);
 		if (!process_line(rt, line))
@@ -34,6 +37,11 @@ int	parse_rt_file(t_tracer *rt, char *path)
 		   rt->camera->xyz.x,
 		   rt->camera->xyz.y, rt->camera->xyz.z, rt->camera->vector.x,
 		   rt->camera->vector.y, rt->camera->vector.z, rt->camera->FOV);
+	printf("LIGHT\n%d r %d g %d b COLOR\n%f BRIGHT\n%f x %f y %f z XYZ\n",
+		   rt->light->color.R,
+		   rt->light->color.G, rt->light->color.B,
+		   rt->light->bright, rt->light->xyz.x,rt->light->xyz.y,
+		   rt->light->xyz.z);
 	close(fd);
 	return (1);
 }

@@ -54,6 +54,20 @@ int	stop_parse(char **xyz)
 	return (0);
 }
 
+void	find_struct(t_coord coord, t_tracer *rt)
+{
+	if (rt->parsing_type == 2)
+		rt->camera->xyz = coord;
+	if (rt->parsing_type == 3)
+		rt->light->xyz = coord;
+	if (rt->parsing_type == 4)
+		rt->sphere->xyz = coord;
+	if (rt->parsing_type == 5)
+		rt->plane->xyz = coord;
+	if (rt->parsing_type == 6)
+		rt->cyl->xyz = coord;
+}
+
 int	parse_coordinates(char **split, t_tracer *rt)
 {
 	t_coord	coord;
@@ -67,6 +81,6 @@ int	parse_coordinates(char **split, t_tracer *rt)
 	coord.z = ft_atod(xyz[2]);
 	if (xyz[3])
 		return (stop_parse(xyz));
-	rt->camera->xyz = coord;
+	find_struct(coord, rt);
 	return (1);
 }

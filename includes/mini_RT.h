@@ -127,6 +127,7 @@ t_color	parse_colors(char **split);
 int		parse_coordinates(char **split, t_tracer *rt);
 int		parse_vector(char **split, t_tracer *rt);
 int		parse_fov(char **split, t_tracer *rt);
+void	find_struct(t_coord coord, t_tracer *rt);
 
 //UTILITIES
 double	ft_atod(char *str); //string to double convert
