@@ -124,6 +124,7 @@ int		fill_camera(char **split, t_tracer *rt);
 int		fill_light(char **split, t_tracer *rt);
 int		fill_sphere(char **split, t_tracer *rt);
 int		fill_plane(char **split, t_tracer *rt);
+int		fill_cylinder(char **split, t_tracer *rt);
 
 double	parse_bright(char **split);
 t_color	parse_colors(char **split);

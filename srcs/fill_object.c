@@ -39,3 +39,27 @@ int	fill_plane(char **split, t_tracer *rt)
 		return (0);
 	return (1);
 }
+
+int	fill_cylinder(char **split, t_tracer *rt)
+{
+	t_cylinder	*cyl;
+	write(1, "hi\n", 3);
+
+	cyl = malloc(sizeof(t_cylinder));
+	if (!cyl)
+		return (0);
+	rt->cyl = cyl;
+	write(1, "hi\n", 3);
+	if (!parse_coordinates(split++, rt) || !parse_vector(split++, rt))
+		return (0);
+	if (*split)
+		cyl->diameter = ft_atod(*split++);
+	if (*split)
+		cyl->height = ft_atod(*split++);
+	if (*split)
+		cyl->color = parse_colors(split++);
+	if (!check_diameter(cyl->diameter) || !check_diameter(cyl->height) ||
+	cyl->color.R == -1 || split[0])
+		return (0);
+	return (1);
+}
