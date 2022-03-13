@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 		unexpected_exit(FILE_ERR, &rt);
 	rt.mlx = mlx_init();
 	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
-
+	render(rt);
 	hooks_extension(rt);
 	mlx_loop(rt.mlx);
 	free_main_struct(&rt);
