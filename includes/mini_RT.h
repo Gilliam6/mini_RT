@@ -95,7 +95,7 @@ typedef struct s_tracer
 {
 	void			*mlx;
 	void			*win;
-	t_img_data		*img;
+	t_img_data		img;
 	t_ambient		*ambient;
 	t_camera		*camera;
 	t_cylinder		*cyl;
@@ -139,6 +139,10 @@ double	ft_atod(char *str); //string to double convert
 //FREE
 void	free_main_struct(t_tracer *rt);
 
+//RENDER
+void	render(t_tracer *rt);
+void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color);
+int		colorize(t_color color);
 
 //MAIN
 int	unexpected_exit(const char *str, t_tracer *rt);

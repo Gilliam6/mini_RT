@@ -1,5 +1,6 @@
 SRCS_LIST = main.c basic_hooks.c parser.c check_line.c fill_object.c fill_environ.c parse_bright.c utilities.c \
-parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c render.c
+parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c render.c mlx_set_color.c \
+
 
 SRCS_DIR = srcs/
 SRCS_DIR_BONUS = srcs_b/
@@ -40,6 +41,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
+DEBUG = -g -fsanitize=address
 # COLORS
 
 GREEN = \033[0;32m
@@ -49,7 +51,7 @@ RESET = \033[0m
 all:	$(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJ)
-		@gcc $(CFLAGS) libft/libft.a -I /usr/local/include $(INCLUDES) $(OBJ) $(MLX) -o $(NAME)
+		@gcc $(CFLAGS) $(DEBUG) libft/libft.a -I /usr/local/include $(INCLUDES) $(OBJ) $(MLX) -o $(NAME)
 		@echo "\n$(NAME):$(GREEN).o files were created$(RESET)"
 		@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 $(OBJ_DIR):
