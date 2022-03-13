@@ -144,6 +144,17 @@ void	render(t_tracer *rt);
 void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color);
 int		colorize(t_color color);
 
+t_coord	vector_sub(t_coord vec1, t_coord vec2);
+t_coord	vector_pow(t_coord vec1, t_coord vec2);
+t_coord	vector_add(t_coord vec1, t_coord vec2);
+t_coord	vector_del(t_coord vec1, t_coord vec2);
+t_coord vector_pow_value(t_coord v1, double value);
+double	scalar_product(t_coord v1, t_coord v2);
+double	magnitude(t_coord v1);
+t_coord	normalize(t_coord v1);
+
+double	scalar_product(t_coord v1, t_coord v2);
+
 //MAIN
 int	unexpected_exit(const char *str, t_tracer *rt);
 
