@@ -49,3 +49,13 @@ t_coord vector_pow_value(t_coord v1, double value)
 	v2.z = v1.z * value;
 	return (v2);
 }
+
+t_coord init_vector(double x, double y, double z)
+{
+	t_coord res;
+
+	res.x = x;
+	res.y = y;
+	res.z = z;
+	return (res);
+}

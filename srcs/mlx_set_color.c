@@ -9,14 +9,26 @@ void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	colorize(t_color color)
+int	colorize(t_coord color)
 {
 	int	rgb;
 
-	rgb = color.R;
+	rgb = 255 * color.x;
 	rgb <<= 8;
-	rgb = color.G;
+	rgb += 255 * color.y;
 	rgb <<= 8;
-	rgb = color.B;
+	rgb += 255 * color.z;
+	return (rgb);
+}
+
+int	vector_in_color(t_coord vector)
+{
+	int rgb;
+
+	rgb = (int)(255 * vector.x);
+	rgb <<= 8;
+	rgb += (int)(255 * vector.y);
+	rgb <<= 8;
+	rgb += (int)(255 * vector.z);
 	return (rgb);
 }

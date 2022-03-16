@@ -42,6 +42,12 @@ typedef struct s_color {
 	int B;
 }				t_color;
 
+typedef struct s_vector2
+{
+	double	x;
+	double	y;
+}				t_vec2;
+
 typedef struct s_coordinate {
 	double x;
 	double y;
@@ -140,9 +146,10 @@ double	ft_atod(char *str); //string to double convert
 void	free_main_struct(t_tracer *rt);
 
 //RENDER
-void	render(t_tracer *rt);
+int	render(t_tracer *rt);
 void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color);
-int		colorize(t_color color);
+int		colorize(t_coord color);
+int	vector_in_color(t_coord vector);
 
 t_coord	vector_sub(t_coord vec1, t_coord vec2);
 t_coord	vector_pow(t_coord vec1, t_coord vec2);
@@ -154,6 +161,7 @@ double	magnitude(t_coord v1);
 t_coord	normalize(t_coord v1);
 
 double	scalar_product(t_coord v1, t_coord v2);
+t_coord init_vector(double x, double y, double z);
 
 //MAIN
 int	unexpected_exit(const char *str, t_tracer *rt);
