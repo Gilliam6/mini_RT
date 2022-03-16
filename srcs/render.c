@@ -8,7 +8,7 @@ int	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, double radius )
 {
 	t_coord oc = vector_sub(cam, sphere);
 	double b = scalar_product(oc, dir);
-	double c = scalar_product(oc, oc) - radius * radius;
+	double c = scalar_product(oc, oc) - (radius * radius);
 	double h = b*b - c;
 	if( h<0.0 )
 		return (0); // no intersection
@@ -23,17 +23,18 @@ void	render(t_tracer *rt)
 	t_coord dir;
 
 
-	ray_direct.z = 1.0;
 	y = 0;
 	while (y < WIN_SIZE_HEIGHT)
 	{
 		x = 0;
-		ray_direct.y = (y / (WIN_SIZE_HEIGHT - 1));
+		ray_direct.y = ((double)y - WIN_SIZE_HEIGHT/  2) / WIN_SIZE_HEIGHT;
 		while (x < WIN_SIZE_WIDTH)
 		{
-			ray_direct.x = (x / (WIN_SIZE_WIDTH - 1)) * WIN_SIZE_WIDTH /
-					WIN_SIZE_HEIGHT;
+			ray_direct.x = (((double)x - WIN_SIZE_WIDTH/2) / WIN_SIZE_WIDTH) *
+					WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
+			ray_direct.z = rt->camera->vector.z;
 			dir = normalize(ray_direct);
+//			printf("%f x %f y %f z\n", dir.x, dir.y, dir.z);
 			if (ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
 							  rt->sphere->diameter / 2.0))
 				my_mlx_pixel_put(rt, x, y, colorize(rt->sphere->color));
