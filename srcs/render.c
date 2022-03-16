@@ -33,21 +33,27 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	double diffuse;
 
 	it = ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
-					   rt->sphere->diameter / 2.0);
+					   rt->sphere->diameter / 2.0); // точки пересечения сферы
 	if (it.x < 0)
-		return (0);
-	point = vector_sub(vector_pow_value(dir, it.x), rt->sphere->xyz);
+		return (colorize(rt->ambient->color, rt->ambient->bright)); //
+		// эмбиент лайт
+	point = vector_sub(vector_pow_value(dir, it.x), rt->sphere->xyz); //
+	// координаты точек пересечения
 	diffuse = scalar_product(normalize(vector_sub(rt->light->xyz, point)),
-							 normalize(point));
-	diffuse *= -rt->light->bright;
+							 normalize(point)); // угол между нормалью и
+							 // источником света
+	diffuse *= -rt->light->bright; // множитель яркости света
+
 	if (diffuse < 0)
 		diffuse = 0;
+
 	t_coord color = init_vector(1.0, 1.0, 1.0);
-	shadow = vector_pow(color,init_vector(diffuse,diffuse,
-														 diffuse));
+	shadow = vector_pow(color,init_vector(diffuse, diffuse, diffuse)); //
+	// предание цвета
 	return(vector_in_color(shadow));
 }
-int	render(t_tracer *rt)
+
+void	render(t_tracer *rt)
 {
 	int	x;
 	int	y;
@@ -74,6 +80,5 @@ int	render(t_tracer *rt)
 		y++;
 	}
 	mlx_put_image_to_window(rt->mlx, rt->win, rt->img.img, 0, 0);
-	return(1);
 }
 

@@ -9,15 +9,15 @@ void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	colorize(t_coord color)
+int	colorize(t_color color, double bright)
 {
 	int	rgb;
 
-	rgb = 255 * color.x;
+	rgb = color.R * bright;
 	rgb <<= 8;
-	rgb += 255 * color.y;
+	rgb += color.G * bright;
 	rgb <<= 8;
-	rgb += 255 * color.z;
+	rgb += color.B * bright;
 	return (rgb);
 }
 

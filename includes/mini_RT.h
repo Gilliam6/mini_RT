@@ -146,9 +146,9 @@ double	ft_atod(char *str); //string to double convert
 void	free_main_struct(t_tracer *rt);
 
 //RENDER
-int	render(t_tracer *rt);
+void	render(t_tracer *rt);
 void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color);
-int		colorize(t_coord color);
+int		colorize(t_color color, double bright);
 int	vector_in_color(t_coord vector);
 
 t_coord	vector_sub(t_coord vec1, t_coord vec2);
