@@ -1,5 +1,5 @@
 SRCS_LIST = main.c basic_hooks.c parser.c check_line.c fill_object.c fill_environ.c parse_bright.c utilities.c \
-parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c
+parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c add_list.c
 
 SRCS_DIR = srcs/
 SRCS_DIR_BONUS = srcs_b/
@@ -37,6 +37,7 @@ NAME = mini_RT
 MLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 CFLAGS = -Wall -Wextra -Werror
+# CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address
 
 RM = rm -f
 

@@ -11,17 +11,28 @@ int	check_vector(t_coord coord)
 	return (1);
 }
 
-void	find_struct_vector(t_coord coord, t_tracer *rt)
+void	find_struct_vector(t_coord coord, t_tracer *rt, void *ptr)
 {
+	t_plane		*copy_pl;
+	t_cylinder	*copy_cyl;
+
 	if (rt->parsing_type == 2)
 		rt->camera->vector = coord;
 	else if (rt->parsing_type == 5)
-		rt->plane->vector = coord;
+	{
+		copy_pl = (t_plane *)ptr;
+		copy_pl->vector = coord;
+	}
+		// rt->plane->vector = coord;
 	else if (rt->parsing_type == 6)
-		rt->cyl->vector = coord;
+	{
+		copy_cyl = (t_cylinder *)ptr;
+		copy_cyl->vector = coord;
+	}
+		// rt->cyl->vector = coord;
 }
 
-int	parse_vector(char **split, t_tracer *rt)
+int	parse_vector(char **split, t_tracer *rt, void *ptr)
 {
 	t_coord	coord;
 	char	**vector;
@@ -34,6 +45,6 @@ int	parse_vector(char **split, t_tracer *rt)
 	coord.z = ft_atod(vector[2]);
 	if (vector[3] || !check_vector(coord))
 		return (stop_parse(vector));
-	find_struct_vector(coord, rt);
+	find_struct_vector(coord, rt, ptr);
 	return (!stop_parse(vector));
 }

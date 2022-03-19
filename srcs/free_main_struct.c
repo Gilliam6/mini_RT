@@ -7,11 +7,11 @@ void	free_main_struct(t_tracer *rt)
 	if (rt->camera)
 		free(rt->camera);
 	if (rt->cyl)
-		free(rt->cyl);
+		free(rt->cyl); // now its's list!
 	if (rt->plane)
-		free(rt->plane);
+		free(rt->plane); // now its's list!
 	if (rt->sphere)
-		free(rt->sphere);
+		free(rt->sphere); // now its's list!
 	if (rt->light)
 		free(rt->light);
 }

@@ -35,15 +35,18 @@ int main(int argc, char **argv)
 	t_tracer	rt;
 
 	if (argc != 2)
-		unexpected_exit(ARG_ERR, &rt);
+	{
+		printf("%s", ARG_ERR);
+		exit (1);
+	}
 	rt = init_rt();
 	if (!parse_rt_file(&rt, argv[1]))
 		unexpected_exit(FILE_ERR, &rt);
-	rt.mlx = mlx_init();
-	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
+	// rt.mlx = mlx_init();
+	// rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
 
-	hooks_extension(rt);
-	mlx_loop(rt.mlx);
+	// hooks_extension(rt);
+	// mlx_loop(rt.mlx);
 	free_main_struct(&rt);
 	return (0);
 }

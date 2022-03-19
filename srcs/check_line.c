@@ -15,6 +15,7 @@ int	check_indentifier(char *indent, t_tracer *rt)
 		rt->parsing_type = 5;
 	else if (ft_strcmp(indent, CYLINDER))
 		rt->parsing_type = 6;
+	// printf("rt->parsing_type = %d\n", rt->parsing_type);
 	return (rt->parsing_type);
 }
 
@@ -32,5 +33,6 @@ int	fill_struct(char **split, t_tracer *rt)
 		return (fill_plane(split, rt));
 	else if (rt->parsing_type == 6)
 		return (fill_cylinder(split, rt));
-	return (1);
+	// return (1);
+	return (0); // or 1?
 }
