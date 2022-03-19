@@ -109,6 +109,10 @@ typedef struct s_tracer
 	t_plane			*plane;
 	t_sphere		*sphere;
 	unsigned char	parsing_type;
+	t_vec2			solve;
+	t_coord			light_dir;
+	t_coord			normal;
+	t_coord			point;
 }				t_tracer;
 
 //HOOKS

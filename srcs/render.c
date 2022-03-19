@@ -27,26 +27,24 @@ t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, double radius )
 
 int	cast_ray(t_tracer *rt, t_coord dir)
 {
-	t_vec2	it;
 	t_coord	shadow;
-	t_coord point;
 	double diffuse;
 
-	it = ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
+	rt->solve = ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
 					   rt->sphere->diameter / 2.0); // точки пересечения сферы
-	if (it.x < 0)
+	if (rt->solve.x < 0)
 		return (colorize(rt->ambient->color, rt->ambient->bright)); //
 		// эмбиент лайт
-	point = vector_sub(vector_pow_value(dir, it.x), rt->sphere->xyz); //
+	rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
+						   rt->camera->xyz);
 	// координаты точек пересечения
-	diffuse = scalar_product(normalize(vector_sub(rt->light->xyz, point)),
-							 normalize(point)); // угол между нормалью и
-							 // источником света
-	diffuse *= -rt->light->bright; // множитель яркости света
-
+	rt->light_dir = normalize(vector_sub(rt->point, rt->light->xyz));
+	rt->normal = normalize(vector_sub(rt->sphere->xyz, rt->point));
+	diffuse = scalar_product(rt->light_dir, rt->normal); // угол
+	// между нормалью и источником света
+	diffuse *= rt->light->bright; // множитель яркости света
 	if (diffuse < 0)
 		diffuse = 0;
-
 	t_coord color = init_vector(1.0, 1.0, 1.0);
 	shadow = vector_pow(color,init_vector(diffuse, diffuse, diffuse)); //
 	// предание цвета
@@ -66,7 +64,7 @@ void	render(t_tracer *rt)
 	while (y < WIN_SIZE_HEIGHT)
 	{
 		x = 0;
-		ray_direct.y = ((double)y - WIN_SIZE_HEIGHT/  2) / WIN_SIZE_HEIGHT;
+		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - y(double)) / WIN_SIZE_HEIGHT;
 		while (x < WIN_SIZE_WIDTH)
 		{
 			ray_direct.x = (((double)x - WIN_SIZE_WIDTH/2) / WIN_SIZE_WIDTH) *
