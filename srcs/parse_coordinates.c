@@ -41,11 +41,13 @@ int	stop_parse(char **xyz)
 {
 	int	i;
 
+	printf("LAUNCH STOP PARSE\n");
 	if (xyz)
 	{
 		i = 0;
 		while (xyz[i])
 		{
+			printf("xyz[%d] = %s\n", i, xyz[i]);
 			free(xyz[i]);
 			i++;
 		}
@@ -96,7 +98,11 @@ int	parse_coordinates(char **split, t_tracer *rt, void *ptr)
 	coord.y = ft_atod(xyz[1]);
 	coord.z = ft_atod(xyz[2]);
 	if (xyz[3])
+	{
+		stop_parse(xyz);
 		return (stop_parse(xyz));
+	}
+	stop_parse(xyz);
 	find_struct_xyz(coord, rt, ptr);
 	return (1);
 }

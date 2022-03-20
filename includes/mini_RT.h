@@ -21,6 +21,7 @@
 # define FILE_ERR			"Error\n"
 # define PARSE_ERR			"File parse Error\n"
 # define RANGE_ERR			"Argument is out of range\n"
+# define READ_ERR			"Cannot read this file\n"
 
 //WINDOW SETTINGS
 # define WIN_SIZE_WIDTH		1024.0
@@ -38,28 +39,28 @@ typedef struct s_data {
 }				t_img_data;
 
 typedef struct s_color {
-	int R;
-	int G;
-	int B;
+	int			R;
+	int			G;
+	int			B;
 }				t_color;
 
 typedef struct s_coordinate {
-	double x;
-	double y;
-	double z;
+	double		x;
+	double		y;
+	double		z;
 }				t_coord;
 
 typedef struct s_light
 {
 	t_coord		xyz;
-	double 		bright;
+	double		bright;
 	t_color		color;
 }				t_light;
 
 typedef struct s_camera
 {
 	t_coord		xyz;
-	t_coord 	vector;
+	t_coord		vector;
 	int			FOV;
 }				t_camera;
 
@@ -92,7 +93,7 @@ typedef struct s_cylinder
 	t_coord				vector;
 	double				height;
 	double				diameter;
-	struct s_cylinder *next;
+	struct s_cylinder	*next;
 }				t_cylinder;
 
 typedef struct s_tracer
@@ -111,7 +112,7 @@ typedef struct s_tracer
 
 //HOOKS
 int		keyboard_hook(int key, t_tracer *rt);
-int 	destroy_window(t_tracer *rt);
+int		destroy_window(t_tracer *rt);
 
 //PARSER
 int		parse_rt_file(t_tracer *rt, char *path);
@@ -139,10 +140,13 @@ void	find_struct(t_coord coord, t_tracer *rt);
 
 //UTILITIES
 double	ft_atod(char *str); //string to double convert
+
+//CHECK_STR
 double	check_double(char *str);
 int		check_ints(char *str);
 double	check_double_in_arr(char *str); // only commas, points and digits
 int		check_ony_one_int(char *str);
+int		check_argv(char *path);
 
 //ADD LISTS
 void	add_sphere_back(t_sphere **lst, t_sphere *new);
@@ -153,6 +157,6 @@ void	add_cylinder_back(t_cylinder **lst, t_cylinder *new);
 void	free_main_struct(t_tracer *rt);
 
 //MAIN
-int	unexpected_exit(const char *str, t_tracer *rt);
+int		unexpected_exit(const char *str, t_tracer *rt);
 
 #endif

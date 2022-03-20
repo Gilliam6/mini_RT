@@ -1,5 +1,5 @@
 SRCS_LIST = main.c basic_hooks.c parser.c check_line.c fill_object.c fill_environ.c parse_bright.c utilities.c \
-parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c add_list.c
+parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c add_list.c check_str.c
 
 SRCS_DIR = srcs/
 SRCS_DIR_BONUS = srcs_b/
@@ -49,7 +49,7 @@ RESET = \033[0m
 
 all:	$(NAME)
 
-$(NAME): $(LIBFT) $(OBJ_DIR) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ_DIR) $(OBJ) mlx/*
 		@gcc $(CFLAGS) libft/libft.a -I /usr/local/include $(INCLUDES) $(OBJ) $(MLX) -o $(NAME)
 		@echo "\n$(NAME):$(GREEN).o files were created$(RESET)"
 		@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"

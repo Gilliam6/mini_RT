@@ -1,93 +1,14 @@
 #include "../includes/mini_RT.h"
 
-int	check_ints(char *str) // only int and commas
-{
-	int	i;
-	int	counter;
-
-	counter = 0;
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == ',')
-			++counter;
-		if (!isdigit(str[i]) && !(str[i] == ',' && str[i + 1] && i != 0))
-		{
-			printf("error in str[i] = %c\n", str[i]);
-			return (-1);
-		}
-	}
-	if (counter != 2)
-		{
-			printf("invalid comma in str[i] = %c\n", str[i]);
-			return (-1);
-		}
-	return (0);
-}
-
-int	check_ony_one_int(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (!isdigit(str[i]))
-		{
-			printf("error in str[i] = %c\n", str[i]);
-			return (-1);
-		}
-	}
-	return (0);
-}
-
-double	check_double_in_arr(char *str) // only commas, points and digits
-{
-	int	i;
-
-	i = -1;
-	// printf("double in str: %s\n", str);
-	while (str[++i])
-	{
-		if (str[0] == '-')
-			++i;
-		if (!isdigit(str[i]) && str[i] != ',' && \
-		!(str[i] == '.' && i != 0))
-		{
-			// printf("atod: wrong str = %c\n", str[i]);
-			return (-1.0);
-		}
-	}
-	return (0);
-}
-
-double	check_double(char *str) // only digit and point
-{
-	int	i;
-
-	i = -1;
-	// printf("double in str: %s\n", str);
-	while (str[++i])
-	{
-		if (!isdigit(str[i]) && !(str[i] == '.' && i != 0))
-		{
-			// printf("atod: wrong str = %c\n", str[i]);
-			return (-1.0);
-		}
-	}
-	return (0);
-}
-
 double	ft_atod(char *str)
 {
 	double	result;
 	double	del;
-	double 	minus;
+	double	minus;
 
 	result = 0.0;
 	minus = 1.0;
 	if (*str == '-' && *str++)
-	// if ((*str == '-' && *str++) || check_num(str) == -1)
 		minus = -1.0;
 	while (*str && *str != '.')
 	{
@@ -105,4 +26,39 @@ double	ft_atod(char *str)
 		str++;
 	}
 	return (minus * result);
+}
+
+static int	check_path(char *path)
+{
+	int	len;
+
+	len = 0;
+	if (!path)
+		return (1);
+	while (path[len] != 0)
+		len++;
+	if (len < 3 || path[len - 1] != 't' || \
+	path[len - 2] != 'r' || path[len - 3] != '.')
+	{
+		printf("Wrong map's name\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	check_argv(char *path)
+{
+	int			fd;
+	char		test;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0 || check_path(path))
+		return (1);
+	if (read(fd, &test, 1) != 1)
+	{
+		close(fd);
+		return (1);
+	}
+	close (fd);
+	return (0);
 }

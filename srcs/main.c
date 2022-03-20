@@ -13,7 +13,7 @@ void	hooks_extension(t_tracer rt)
 	mlx_hook(rt.win, 17, 0L, destroy_window, &rt);
 }
 
-t_tracer	init_rt()
+t_tracer	init_rt(void)
 {
 	t_tracer	rt;
 
@@ -30,7 +30,7 @@ t_tracer	init_rt()
 	return (rt);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_tracer	rt;
 
@@ -39,14 +39,22 @@ int main(int argc, char **argv)
 		printf("%s", ARG_ERR);
 		exit (1);
 	}
+	if (check_argv(argv[1]))
+	{
+		printf("%s", READ_ERR);
+		exit (1);
+	}
 	rt = init_rt();
 	if (!parse_rt_file(&rt, argv[1]))
 		unexpected_exit(FILE_ERR, &rt);
-	// rt.mlx = mlx_init();
-	// rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
-
-	// hooks_extension(rt);
-	// mlx_loop(rt.mlx);
+	rt.mlx = mlx_init();
+	if (rt.mlx == NULL)
+		free_main_struct(&rt);
+	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
+	if (rt.win == NULL)
+		free_main_struct(&rt);
+	hooks_extension(rt);
+	mlx_loop(rt.mlx);
 	free_main_struct(&rt);
 	return (0);
 }

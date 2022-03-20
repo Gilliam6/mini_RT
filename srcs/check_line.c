@@ -15,24 +15,23 @@ int	check_indentifier(char *indent, t_tracer *rt)
 		rt->parsing_type = 5;
 	else if (ft_strcmp(indent, CYLINDER))
 		rt->parsing_type = 6;
-	// printf("rt->parsing_type = %d\n", rt->parsing_type);
 	return (rt->parsing_type);
 }
 
 int	fill_struct(char **split, t_tracer *rt)
 {
 	if (rt->parsing_type == 1)
-		return (fill_ambient(split, rt));
+		return (fill_ambient(split + 1, rt));
 	else if (rt->parsing_type == 2)
-		return (fill_camera(split, rt));
+		return (fill_camera(split + 1, rt));
 	else if (rt->parsing_type == 3)
-		return (fill_light(split, rt));
+		return (fill_light(split + 1, rt));
 	else if (rt->parsing_type == 4)
-		return (fill_sphere(split, rt));
+		return (fill_sphere(split + 1, rt));
 	else if (rt->parsing_type == 5)
-		return (fill_plane(split, rt));
+		return (fill_plane(split + 1, rt));
 	else if (rt->parsing_type == 6)
-		return (fill_cylinder(split, rt));
+		return (fill_cylinder(split + 1, rt));
 	// return (1);
 	return (0); // or 1?
 }

@@ -2,7 +2,7 @@
 
 void	add_sphere_back(t_sphere **lst, t_sphere *new)
 {
-	t_sphere    *copy;
+	t_sphere	*copy;
 
 	if (!lst || !new)
 		return ;
@@ -15,12 +15,12 @@ void	add_sphere_back(t_sphere **lst, t_sphere *new)
 	}
 	else
 		*lst = new;
-    new->next = NULL;
+	new->next = NULL;
 }
 
 void	add_plane_back(t_plane **lst, t_plane *new)
 {
-	t_plane    *copy;
+	t_plane	*copy;
 
 	if (!lst || !new)
 		return ;
@@ -33,12 +33,12 @@ void	add_plane_back(t_plane **lst, t_plane *new)
 	}
 	else
 		*lst = new;
-    new->next = NULL;
+	new->next = NULL;
 }
 
 void	add_cylinder_back(t_cylinder **lst, t_cylinder *new)
 {
-	t_cylinder    *copy;
+	t_cylinder	*copy;
 
 	if (!lst || !new)
 		return ;
@@ -51,5 +51,5 @@ void	add_cylinder_back(t_cylinder **lst, t_cylinder *new)
 	}
 	else
 		*lst = new;
-    new->next = NULL;
+	new->next = NULL;
 }
