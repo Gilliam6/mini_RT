@@ -41,11 +41,13 @@ int	stop_parse(char **xyz)
 {
 	int	i;
 
+	printf("LAUNCH STOP PARSE\n");
 	if (xyz)
 	{
 		i = 0;
 		while (xyz[i])
 		{
+			printf("xyz[%d] = %s\n", i, xyz[i]);
 			free(xyz[i]);
 			i++;
 		}
@@ -54,21 +56,37 @@ int	stop_parse(char **xyz)
 	return (0);
 }
 
-void	find_struct_xyz(t_coord coord, t_tracer *rt)
+void	find_struct_xyz(t_coord coord, t_tracer *rt, void *ptr)
 {
+	t_plane		*copy_pl;
+	t_cylinder	*copy_cyl;
+	t_sphere	*copy_sp;
+	
 	if (rt->parsing_type == 2)
 		rt->camera->xyz = coord;
 	else if (rt->parsing_type == 3)
 		rt->light->xyz = coord;
 	else if (rt->parsing_type == 4)
-		rt->sphere->xyz = coord;
+	{
+		copy_sp = (t_sphere *)ptr;
+		copy_sp->xyz = coord;
+	}
+		// rt->sphere->xyz = coord;
 	else if (rt->parsing_type == 5)
-		rt->plane->xyz = coord;
+	{
+		copy_pl = (t_plane *)ptr;
+		copy_pl->xyz = coord;
+	}
+		// rt->plane->xyz = coord;
 	else if (rt->parsing_type == 6)
-		rt->cyl->xyz = coord;
+	{
+		copy_cyl = (t_cylinder *)ptr;
+		copy_cyl->xyz = coord;
+	}
+		// rt->cyl->xyz = coord;
 }
 
-int	parse_coordinates(char **split, t_tracer *rt)
+int	parse_coordinates(char **split, t_tracer *rt, void *ptr)
 {
 	t_coord	coord;
 	char	**xyz;
@@ -80,7 +98,11 @@ int	parse_coordinates(char **split, t_tracer *rt)
 	coord.y = ft_atod(xyz[1]);
 	coord.z = ft_atod(xyz[2]);
 	if (xyz[3])
+	{
+		stop_parse(xyz);
 		return (stop_parse(xyz));
-	find_struct_xyz(coord, rt);
+	}
+	stop_parse(xyz);
+	find_struct_xyz(coord, rt, ptr);
 	return (1);
 }

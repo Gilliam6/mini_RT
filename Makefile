@@ -41,7 +41,6 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
-DEBUG = -g -fsanitize=address
 # COLORS
 
 GREEN = \033[0;32m
@@ -51,7 +50,7 @@ RESET = \033[0m
 all:	$(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJ)
-		@gcc $(CFLAGS) $(DEBUG) libft/libft.a -I /usr/local/include $(INCLUDES) $(OBJ) $(MLX) -o $(NAME)
+		@gcc $(CFLAGS) libft/libft.a -I /usr/local/include $(INCLUDES) $(OBJ) $(MLX) -o $(NAME)
 		@echo "\n$(NAME):$(GREEN).o files were created$(RESET)"
 		@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 $(OBJ_DIR):

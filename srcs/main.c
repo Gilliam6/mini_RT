@@ -14,7 +14,7 @@ void	hooks_extension(t_tracer rt)
 	mlx_hook(rt.win, 17, 0L, destroy_window, &rt);
 }
 
-t_tracer	init_rt()
+t_tracer	init_rt(void)
 {
 	t_tracer	rt;
 
@@ -26,6 +26,7 @@ t_tracer	init_rt()
 	rt.cyl = 0;
 	rt.camera = 0;
 	rt.parsing_type = 0;
+	rt.img = 0;
 	rt.ambient = 0;
 	return (rt);
 }

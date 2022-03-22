@@ -21,16 +21,17 @@ int	check_indentifier(char *indent, t_tracer *rt)
 int	fill_struct(char **split, t_tracer *rt)
 {
 	if (rt->parsing_type == 1)
-		return (fill_ambient(split, rt));
+		return (fill_ambient(split + 1, rt));
 	else if (rt->parsing_type == 2)
-		return (fill_camera(split, rt));
+		return (fill_camera(split + 1, rt));
 	else if (rt->parsing_type == 3)
-		return (fill_light(split, rt));
+		return (fill_light(split + 1, rt));
 	else if (rt->parsing_type == 4)
-		return (fill_sphere(split, rt));
+		return (fill_sphere(split + 1, rt));
 	else if (rt->parsing_type == 5)
-		return (fill_plane(split, rt));
+		return (fill_plane(split + 1, rt));
 	else if (rt->parsing_type == 6)
-		return (fill_cylinder(split, rt));
-	return (1);
+		return (fill_cylinder(split + 1, rt));
+	// return (1);
+	return (0); // or 1?
 }

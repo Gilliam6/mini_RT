@@ -1,8 +1,8 @@
 #include "../includes/mini_RT.h"
 
-t_color color_fail()
+t_color	color_fail(void)
 {
-	t_color color;
+	t_color	color;
 
 	color.R = -1;
 	color.B = -1;
@@ -24,7 +24,7 @@ int	check_colors(t_color color)
 t_color	parse_colors(char **split)
 {
 	char		**rgb;
-	t_color 	color;
+	t_color		color;
 
 	rgb = ft_split(split[0], ',');
 	if (!rgb)
@@ -33,6 +33,10 @@ t_color	parse_colors(char **split)
 	color.G = ft_atoi(rgb[1]);
 	color.B = ft_atoi(rgb[2]);
 	if (rgb[3] || !check_colors(color))
+	{
+		stop_parse(rgb);
 		return (color_fail());
+	}
+	stop_parse(rgb);
 	return (color);
 }
