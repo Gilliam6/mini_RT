@@ -1,5 +1,5 @@
 #include "../includes/mini_RT.h"
-
+#include <sys/time.h>
 void	print_vector(t_coord v)
 {
 	printf("%f x\n%f y\n%f z\n", v.x, v.y, v.z);
@@ -25,29 +25,53 @@ t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, double radius )
 	return (res);
 }
 
+double	compute_reflect(t_tracer *rt, t_coord dir)
+{
+	double	reflect;
+	rt->reflect_vec = vector_pow_value(rt->normal, scalar_product(dir, rt->normal)
+	* 2.0);
+	rt->reflect_vec = vector_sub(dir, rt->reflect_vec);
+	reflect = scalar_product(rt->light_dir, rt->reflect_vec);
+	if (reflect < 0)
+		reflect = 0;
+	reflect = pow(reflect, 8.0);
+	return (reflect);
+}
 int	cast_ray(t_tracer *rt, t_coord dir)
 {
 	t_coord	shadow;
 	double diffuse;
+	struct timeval t;
 
+	gettimeofday(&t, 0);
+//	rt->light->xyz.x = t.tv_usec / 10000;
 	rt->solve = ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
-					   rt->sphere->diameter / 2.0); // точки пересечения сферы
+					   rt->sphere->diameter / 2.0); // точки пересечения
+					   // сферы решаем квадратное уравнение дескриминантой
 	if (rt->solve.x < 0)
 		return (colorize(rt->ambient->color, rt->ambient->bright)); //
-		// эмбиент лайт
+		// эмбиент лайт если луч не попал в сферу
 	rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
 						   rt->camera->xyz);
 	// координаты точек пересечения
-	rt->light_dir = normalize(vector_sub(rt->point, rt->light->xyz));
-	rt->normal = normalize(vector_sub(rt->sphere->xyz, rt->point));
+	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
+	rt->normal = normalize(vector_sub(rt->point, rt->sphere->xyz));
 	diffuse = scalar_product(rt->light_dir, rt->normal); // угол
 	// между нормалью и источником света
+	diffuse += compute_reflect(rt, dir);
 	diffuse *= rt->light->bright; // множитель яркости света
+	if (diffuse > 1.0)
+		diffuse = 1.0;
+//	if (diffuse < 0)
+//		diffuse = 0;
 	if (diffuse < 0)
 		diffuse = 0;
-	t_coord color = init_vector(1.0, 1.0, 1.0);
+	t_coord color = init_vector(1.0, 1.0, 1.0); // цвет фигуры по умолчанию
+	// белый
+//	if (diffuse < rt->amb_color)
+//		diffuse = rt->amb_color;
 	shadow = vector_pow(color,init_vector(diffuse, diffuse, diffuse)); //
-	// предание цвета
+	// предание финального цвета
 	return(vector_in_color(shadow));
 }
 
@@ -58,13 +82,14 @@ void	render(t_tracer *rt)
 	t_coord ray_direct;
 	t_coord dir;
 
+//	rt->amb_color = rt->ambient->color.R / 255 * rt->ambient->bright;
 	ray_direct.z = rt->camera->vector.z;
 
 	y = 0;
 	while (y < WIN_SIZE_HEIGHT)
 	{
 		x = 0;
-		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - y(double)) / WIN_SIZE_HEIGHT;
+		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)y) / WIN_SIZE_HEIGHT;
 		while (x < WIN_SIZE_WIDTH)
 		{
 			ray_direct.x = (((double)x - WIN_SIZE_WIDTH/2) / WIN_SIZE_WIDTH) *

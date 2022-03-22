@@ -10,5 +10,10 @@ int	keyboard_hook(int key, t_tracer *rt)
 {
 	if (key == ESC_BUTTON)
 		destroy_window(rt);
+//	if (key == 32)
+//	{
+//		printf("%d\n", key);
+//		render(rt);
+//	}
 	return (0);
 }

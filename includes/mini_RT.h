@@ -111,8 +111,10 @@ typedef struct s_tracer
 	unsigned char	parsing_type;
 	t_vec2			solve;
 	t_coord			light_dir;
+	t_coord			reflect_vec;
 	t_coord			normal;
 	t_coord			point;
+	double 			amb_color;
 }				t_tracer;
 
 //HOOKS
