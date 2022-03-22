@@ -41,10 +41,7 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 {
 	t_coord	shadow;
 	double diffuse;
-	struct timeval t;
 
-	gettimeofday(&t, 0);
-//	rt->light->xyz.x = t.tv_usec / 10000;
 	rt->solve = ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
 					   rt->sphere->diameter / 2.0); // точки пересечения
 					   // сферы решаем квадратное уравнение дескриминантой
@@ -62,14 +59,10 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	diffuse *= rt->light->bright; // множитель яркости света
 	if (diffuse > 1.0)
 		diffuse = 1.0;
-//	if (diffuse < 0)
-//		diffuse = 0;
 	if (diffuse < 0)
 		diffuse = 0;
 	t_coord color = init_vector(1.0, 1.0, 1.0); // цвет фигуры по умолчанию
 	// белый
-//	if (diffuse < rt->amb_color)
-//		diffuse = rt->amb_color;
 	shadow = vector_pow(color,init_vector(diffuse, diffuse, diffuse)); //
 	// предание финального цвета
 	return(vector_in_color(shadow));
