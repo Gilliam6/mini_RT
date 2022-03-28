@@ -119,12 +119,12 @@ int	parse_rt_file(t_tracer *rt, char *path)
 	free(line);
 	if (!i)
 		return (0);
-	print_amb(rt); //del?
-	print_cam(rt); //del?
-	print_light(rt); //del?
-	print_sphere(rt); //del?
-	print_plane(rt); //del?
-	print_cyl(rt); //del?
+//	print_amb(rt); //del?
+//	print_cam(rt); //del?
+//	print_light(rt); //del?
+//	print_sphere(rt); //del?
+//	print_plane(rt); //del?
+//	print_cyl(rt); //del?
 	close(fd);
 	return (1);
 }

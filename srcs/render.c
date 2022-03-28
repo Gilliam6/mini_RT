@@ -34,16 +34,77 @@ double	compute_reflect(t_tracer *rt, t_coord dir)
 	reflect = scalar_product(rt->light_dir, rt->reflect_vec);
 	if (reflect < 0)
 		reflect = 0;
-	reflect = pow(reflect, 8.0);
+	reflect = pow(reflect, 16.0);
 	return (reflect);
 }
+
+int	check_shadow(t_tracer *rt, t_sphere *check)
+{
+	t_sphere *start;
+
+	start = rt->sphere;
+	while (start)
+	{
+		if (start == check)
+		{
+			start = start->next;
+			continue;
+		}
+		else if (ray_intersect(rt->point, rt->light_dir,
+									   rt->sphere->xyz,
+						  rt->sphere->diameter /2).x>0)
+			return(1);
+		start = start->next;
+	}
+	return (0);
+}
+
+t_sphere 	*first_intersect(t_tracer *rt, t_coord dir)
+{
+	t_vec2 tmp;
+	t_sphere *final;
+	t_sphere *start;
+
+	start = rt->sphere;
+	rt->solve.x = 0;
+	rt->solve.y = 0;
+	while (start)
+	{
+		tmp = ray_intersect(rt->camera->xyz, dir, start->xyz,
+								  start->diameter / 2.0);
+		rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
+										   rt->camera->xyz);
+//		if (check_shadow(rt, start))
+//		{
+//			start = start->next;
+//			continue ;
+//		}
+		if (!rt->solve.x && tmp.x > 0)
+		{
+			rt->solve = tmp;
+			final = start;
+		}
+		else if (tmp.x < rt->solve.x && tmp.x > 0)
+		{
+			rt->solve = tmp;
+			final = start;
+		}
+		start = start->next;
+	}
+	if (!rt->solve.x)
+		rt->solve.x = -1.0;
+	return (final);
+}
+
 int	cast_ray(t_tracer *rt, t_coord dir)
 {
 	t_coord	shadow;
 	double diffuse;
+	t_sphere *final;
 
-	rt->solve = ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
-					   rt->sphere->diameter / 2.0); // точки пересечения
+	final = first_intersect(rt, dir);
+//	rt->solve = ray_intersect(rt->camera->xyz, dir, rt->sphere->xyz,
+//					   rt->sphere->diameter / 2.0); // точки пересечения
 					   // сферы решаем квадратное уравнение дескриминантой
 	if (rt->solve.x < 0)
 		return (colorize(rt->ambient->color, rt->ambient->bright)); //
@@ -52,7 +113,7 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 						   rt->camera->xyz);
 	// координаты точек пересечения
 	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
-	rt->normal = normalize(vector_sub(rt->point, rt->sphere->xyz));
+	rt->normal = normalize(vector_sub(rt->point, final->xyz));
 	diffuse = scalar_product(rt->light_dir, rt->normal); // угол
 	// между нормалью и источником света
 	diffuse += compute_reflect(rt, dir);
@@ -61,6 +122,7 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 		diffuse = 1.0;
 	if (diffuse < 0)
 		diffuse = 0;
+
 	t_coord color = init_vector(1.0, 1.0, 1.0); // цвет фигуры по умолчанию
 	// белый
 	shadow = vector_pow(color,init_vector(diffuse, diffuse, diffuse)); //
@@ -74,7 +136,6 @@ void	render(t_tracer *rt)
 	int	y;
 	t_coord ray_direct;
 	t_coord dir;
-
 //	rt->amb_color = rt->ambient->color.R / 255 * rt->ambient->bright;
 	ray_direct.z = rt->camera->vector.z;
 
