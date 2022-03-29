@@ -185,6 +185,7 @@ t_coord	normalize(t_coord v1);
 
 double	scalar_product(t_coord v1, t_coord v2);
 t_coord init_vector(double x, double y, double z);
+t_coord init_vector_from_rgb(double x, double y, double z);
 
 //MAIN
 int	unexpected_exit(const char *str, t_tracer *rt);

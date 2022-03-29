@@ -1,5 +1,4 @@
 #include "../includes/mini_RT.h"
-#include <sys/time.h>
 void	print_vector(t_coord v)
 {
 	printf("%f x\n%f y\n%f z\n", v.x, v.y, v.z);
@@ -38,10 +37,11 @@ double	compute_reflect(t_tracer *rt, t_coord dir)
 	return (reflect);
 }
 
-int	check_shadow(t_tracer *rt, t_sphere *check)
+int	check_shadow(t_tracer *rt, t_sphere *check) // check это сфера от которой
+// проверяем тень
 {
-	t_sphere *start;
-
+	t_sphere *start; // tmp переменная для пробега по сферам
+	t_vec2 points;
 	start = rt->sphere;
 	while (start)
 	{
@@ -50,9 +50,9 @@ int	check_shadow(t_tracer *rt, t_sphere *check)
 			start = start->next;
 			continue;
 		}
-		else if (ray_intersect(rt->point, rt->light_dir,
-									   rt->sphere->xyz,
-						  rt->sphere->diameter /2).x>0)
+		points = ray_intersect(rt->point, rt->light_dir, rt->sphere->xyz,
+					  rt->sphere->diameter /2);
+		if (points.x > 0)
 			return(1);
 		start = start->next;
 	}
@@ -74,11 +74,11 @@ t_sphere 	*first_intersect(t_tracer *rt, t_coord dir)
 								  start->diameter / 2.0);
 		rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
 										   rt->camera->xyz);
-//		if (check_shadow(rt, start))
-//		{
-//			start = start->next;
-//			continue ;
-//		}
+		if (rt->solve.x > 0 && check_shadow(rt, start))
+		{
+			start = start->next;
+			continue ;
+		}
 		if (!rt->solve.x && tmp.x > 0)
 		{
 			rt->solve = tmp;
@@ -123,7 +123,10 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	if (diffuse < 0)
 		diffuse = 0;
 
-	t_coord color = init_vector(1.0, 1.0, 1.0); // цвет фигуры по умолчанию
+	t_coord color = init_vector_from_rgb(final->color.R, final->color.G,
+								final->color.B); // цвет
+	// фигуры по
+	// умолчанию
 	// белый
 	shadow = vector_pow(color,init_vector(diffuse, diffuse, diffuse)); //
 	// предание финального цвета
@@ -136,9 +139,9 @@ void	render(t_tracer *rt)
 	int	y;
 	t_coord ray_direct;
 	t_coord dir;
+
 //	rt->amb_color = rt->ambient->color.R / 255 * rt->ambient->bright;
 	ray_direct.z = rt->camera->vector.z;
-
 	y = 0;
 	while (y < WIN_SIZE_HEIGHT)
 	{

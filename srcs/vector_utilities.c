@@ -59,3 +59,13 @@ t_coord init_vector(double x, double y, double z)
 	res.z = z;
 	return (res);
 }
+
+t_coord init_vector_from_rgb(double x, double y, double z)
+{
+	t_coord res;
+
+	res.x = x / 255.0;
+	res.y = y / 255.0;
+	res.z = z / 255.0;
+	return (res);
+}
