@@ -26,7 +26,6 @@ t_tracer	init_rt(void)
 	rt.cyl = 0;
 	rt.camera = 0;
 	rt.parsing_type = 0;
-//	rt.img = 0;
 	rt.ambient = 0;
 	return (rt);
 }

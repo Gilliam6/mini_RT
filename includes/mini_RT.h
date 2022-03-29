@@ -175,8 +175,12 @@ int		colorize(t_color color, double bright);
 int	vector_in_color(t_coord vector);
 
 t_coord	vector_sub(t_coord vec1, t_coord vec2);
+t_coord	vector_sub_val(t_coord vec1, double vec2);
+
 t_coord	vector_pow(t_coord vec1, t_coord vec2);
 t_coord	vector_add(t_coord vec1, t_coord vec2);
+t_coord	vector_add_val(t_coord vec1, double vec2);
+
 t_coord	vector_del(t_coord vec1, t_coord vec2);
 t_coord vector_pow_value(t_coord v1, double value);
 double	scalar_product(t_coord v1, t_coord v2);

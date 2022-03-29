@@ -42,6 +42,12 @@ int	check_shadow(t_tracer *rt, t_sphere *check) // check это сфера от 
 {
 	t_sphere *start; // tmp переменная для пробега по сферам
 	t_vec2 points;
+	t_coord shadow;
+
+	if (scalar_product(rt->light_dir, rt->normal) < 0)
+		shadow = vector_sub_val(rt->point, 0.001);
+	else
+		shadow = vector_add_val(rt->point, 0.001);
 	start = rt->sphere;
 	while (start)
 	{
@@ -50,8 +56,8 @@ int	check_shadow(t_tracer *rt, t_sphere *check) // check это сфера от 
 			start = start->next;
 			continue;
 		}
-		points = ray_intersect(rt->point, rt->light_dir, rt->sphere->xyz,
-					  rt->sphere->diameter /2);
+		points = ray_intersect(shadow, rt->light_dir, start->xyz,
+							   start->diameter / 2.0);
 		if (points.x > 0)
 			return(1);
 		start = start->next;
@@ -72,13 +78,8 @@ t_sphere 	*first_intersect(t_tracer *rt, t_coord dir)
 	{
 		tmp = ray_intersect(rt->camera->xyz, dir, start->xyz,
 								  start->diameter / 2.0);
-		rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
-										   rt->camera->xyz);
-		if (rt->solve.x > 0 && check_shadow(rt, start))
-		{
-			start = start->next;
-			continue ;
-		}
+//		if (rt->solve.x > 0.0 && check_shadow(rt, start))
+//			tmp.x = -1.0;
 		if (!rt->solve.x && tmp.x > 0)
 		{
 			rt->solve = tmp;
@@ -111,25 +112,29 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 		// эмбиент лайт если луч не попал в сферу
 	rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
 						   rt->camera->xyz);
+
 	// координаты точек пересечения
+
 	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
 	rt->normal = normalize(vector_sub(rt->point, final->xyz));
-	diffuse = scalar_product(rt->light_dir, rt->normal); // угол
-	// между нормалью и источником света
-	diffuse += compute_reflect(rt, dir);
-	diffuse *= rt->light->bright; // множитель яркости света
-	if (diffuse > 1.0)
-		diffuse = 1.0;
-	if (diffuse < 0)
+	if (check_shadow(rt, final))
 		diffuse = 0;
+	else
+	{
+		diffuse = scalar_product(rt->light_dir, rt->normal); // угол
+		// между нормалью и источником света
+		diffuse += compute_reflect(rt, dir);
+		diffuse *= rt->light->bright; // множитель яркости света
+		if (diffuse > 1.0)
+			diffuse = 1.0;
+		if (diffuse < 0)
+			diffuse = 0;
+	}
 
 	t_coord color = init_vector_from_rgb(final->color.R, final->color.G,
-								final->color.B); // цвет
-	// фигуры по
-	// умолчанию
-	// белый
+								final->color.B); // цвет фигуры
 	shadow = vector_pow(color,init_vector(diffuse, diffuse, diffuse)); //
-	// предание финального цвета
+	// изменение цвета фигуры под множитель всех изменений цвета
 	return(vector_in_color(shadow));
 }
 

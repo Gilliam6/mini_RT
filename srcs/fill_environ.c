@@ -33,8 +33,8 @@ int	fill_camera(char **split, t_tracer *rt)
 	if (!cam)
 		return (0);
 	rt->camera = cam;
-	if (check_double_in_arr(split[0]) == -1.0 || \
-	check_double_in_arr(split[1]) == -1.0 || \
+	if (check_double_in_arr(split[0]) == -1 || \
+	check_double_in_arr(split[1]) == -1 || \
 	check_ony_one_int(split[2]) == -1 || split[3])
 	{
 		printf("%s\n", RANGE_ERR);
@@ -58,8 +58,8 @@ int	fill_light(char **split, t_tracer *rt)
 	if (!light)
 		return (0);
 	rt->light = light;
-	if (check_double_in_arr(split[0]) == -1.0 || \
-	check_double(split[1]) == -1.0 || \
+	if (check_double_in_arr(split[0]) == -1 ||
+	check_double(split[1]) == -1 ||
 	check_ints(split[2]) == -1 || split[3])
 	{
 		printf("%s\n", RANGE_ERR);

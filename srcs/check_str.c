@@ -46,12 +46,12 @@ double	check_double_in_arr(char *str) // only commas, points and digits
 	int	i;
 
 	i = -1;
-	// printf("double in str: %s\n", str);
+	 printf("double in str: %s\n", str);
 	while (str[++i])
 	{
-		if (str[0] == '-')
+		if (str[i] == '-')
 			++i;
-		if (!isdigit(str[i]) && str[i] != ',' && \
+		if (!isdigit(str[i]) && str[i] != ',' &&
 		!(str[i] == '.' && i != 0))
 		{
 			// printf("atod: wrong str = %c\n", str[i]);

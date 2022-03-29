@@ -9,13 +9,16 @@ int	process_line(t_tracer *rt, char *line)
 		return (0);
 	if (!split[0])
 		return (-1 + stop_parse(split));
+
 	if (!check_indentifier(split[0], rt))
 	{
 		printf("invalid type ID\n");
 		return (0 + stop_parse(split));
 	}
+
 	if (!fill_struct(split, rt))
 		return (0 + stop_parse(split));
+
 	return (!stop_parse(split));
 }
 
@@ -41,6 +44,7 @@ void	print_light(t_tracer *rt) //del?
 		rt->light->bright, rt->light->xyz.x,rt->light->xyz.y,
 		rt->light->xyz.z);
 }
+
 void	print_sphere(t_tracer *rt) //del?
 {
 	t_sphere *copy = rt->sphere;
