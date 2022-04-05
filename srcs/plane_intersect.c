@@ -18,7 +18,7 @@ double	plaIntersect(t_coord cam, t_coord dir, t_plane *plane)
 //	return -(dot(ro,p.xyz)+p.w)/dot(rd,p.xyz);
 }
 
-t_coord first_intersect_plane(t_tracer *rt, t_coord dir)
+int first_intersect_plane(t_tracer *rt, t_coord dir)
 {
 	double tmp;
 	t_plane *final;
@@ -40,5 +40,5 @@ t_coord first_intersect_plane(t_tracer *rt, t_coord dir)
 		}
 		start = start->next;
 	}
-	return (final->xyz);
+	return (1);
 }

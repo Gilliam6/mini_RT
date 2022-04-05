@@ -46,34 +46,39 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	double diffuse;
 //	t_coord	color;
 
-	rt->final_coord = first_intersect_sphere(rt, dir);
+//	first_intersect_sphere(rt, dir);
 //	rt->final_coord = first_intersect_plane(rt, dir);
-	if (rt->solve.x < 0)
+	if (!first_intersect_sphere(rt, dir))
 		return (0); //
 		// to do: Переделать! эмбиент лайт должен быть на сфере а не на фоне
 	rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
 						   rt->camera->xyz);// координаты точек пересечения
-
 	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
 	rt->normal = normalize(vector_sub(rt->point, rt->final_coord));
-	if (check_shadow(rt))
+//	if (check_shadow(rt))
+//		diffuse = 0;
+//	else
+//	{
+	diffuse = scalar_product(rt->light_dir, rt->normal); // угол
+	// между нормалью и источником света
+	diffuse += compute_reflect(rt, dir);
+	diffuse *= rt->light->bright; // множитель яркости света
+	if (diffuse > 1.0)
+		diffuse = 1.0;
+	if (diffuse < 0)
 		diffuse = 0;
-	else
-	{
-		diffuse = scalar_product(rt->light_dir, rt->normal); // угол
-		// между нормалью и источником света
-		diffuse += compute_reflect(rt, dir);
-		diffuse *= rt->light->bright; // множитель яркости света
-		if (diffuse > 1.0)
-			diffuse = 1.0;
-		if (diffuse < 0)
-			diffuse = 0;
-	}
-
+//	}
+	if (check_shadow(rt))
+		diffuse *= 0.35;
+	diffuse = pow(diffuse, 0.45); // гамма коррекция
 
 //	color = init_vector_from_rgb(rt->sphere->color);// цвет фигуры
-	shadow = vector_pow(rt->amb_color,init_vector(diffuse, diffuse, diffuse));//
+	shadow = vector_pow(rt->final_color,init_vector(diffuse,
+													diffuse,
+													diffuse)
+	);//
 	// изменение цвета фигуры под множитель всех изменений цвета
+//	shadow = vector_pow(shadow, rt->amb_color);
 	return(vector_in_color(shadow));
 }
 

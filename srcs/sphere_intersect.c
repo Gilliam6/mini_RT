@@ -20,7 +20,7 @@ t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, double radius )
 	return (res);
 }
 
-t_coord 	first_intersect_sphere(t_tracer *rt, t_coord dir)
+int	first_intersect_sphere(t_tracer *rt, t_coord dir)
 {
 	t_vec2 tmp;
 	t_sphere *final;
@@ -33,16 +33,12 @@ t_coord 	first_intersect_sphere(t_tracer *rt, t_coord dir)
 	{
 		tmp = ray_intersect(rt->camera->xyz, dir, start->xyz,
 							start->diameter / 2.0);
-		if (!rt->solve.x && tmp.x > 0)
+		if ((!rt->solve.x && tmp.x > 0) || (tmp.x < rt->solve.x && tmp.x >
+		        EPSILON))
 		{
 			rt->solve = tmp;
-			rt->amb_color = init_vector_from_rgb(start->color);
-			final = start;
-		}
-		else if (tmp.x < rt->solve.x && tmp.x > 0)
-		{
-			rt->solve = tmp;
-			rt->amb_color = init_vector_from_rgb(start->color);
+			rt->final_color = init_vector_from_rgb(start->color);
+			rt->final_coord = start->xyz;
 			final = start;
 		}
 		start = start->next;
@@ -50,7 +46,8 @@ t_coord 	first_intersect_sphere(t_tracer *rt, t_coord dir)
 	if (!rt->solve.x)
 	{
 		rt->solve.x = -1.0;
-		return (init_vector(0,0,0));
+		rt->final_color = init_vector(0,0,0);
+		return (0);
 	}
-	return (final->xyz);
+	return (1);
 }

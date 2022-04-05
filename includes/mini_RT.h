@@ -30,6 +30,9 @@
 //BUTTONS
 # define ESC_BUTTON			53
 
+//RENDER
+# define EPSILON			0.001
+
 typedef struct s_data {
 	void	*img;
 	char	*addr;
@@ -131,6 +134,7 @@ typedef struct s_tracer
 	t_coord			final_coord;
 //	t_objects		*touched_object; //объект пересечение с которым ближе всего
 	t_coord 		amb_color;
+	t_coord			final_color;
 }				t_tracer;
 
 //HOOKS
@@ -204,9 +208,9 @@ t_coord init_vector_from_rgb(t_color color);
 
 t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, double
 radius);
-t_coord 	first_intersect_sphere(t_tracer *rt, t_coord dir);
+int 	first_intersect_sphere(t_tracer *rt, t_coord dir);
 double	plaIntersect(t_coord cam, t_coord dir, t_plane *plane);
-t_coord first_intersect_plane(t_tracer *rt, t_coord dir);
+int 	first_intersect_plane(t_tracer *rt, t_coord dir);
 
 //MAIN
 int	unexpected_exit(const char *str, t_tracer *rt);
