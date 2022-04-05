@@ -80,12 +80,12 @@ t_coord init_vector(double x, double y, double z)
 	return (res);
 }
 
-t_coord init_vector_from_rgb(double x, double y, double z)
+t_coord init_vector_from_rgb(t_color color)
 {
 	t_coord res;
 
-	res.x = x / 255.0;
-	res.y = y / 255.0;
-	res.z = z / 255.0;
+	res.x = color.R / 255.0;
+	res.y = color.G / 255.0;
+	res.z = color.B / 255.0;
 	return (res);
 }

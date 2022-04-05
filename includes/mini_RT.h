@@ -102,6 +102,15 @@ typedef struct s_cylinder
 	struct s_cylinder	*next;
 }				t_cylinder;
 
+typedef struct s_objects
+{
+	t_plane		*plane;
+	double 		plane_sol;
+	t_sphere	*sphere;
+	t_vec2 		sphere_sol;
+	t_cylinder	*cyl;
+} t_objects;
+
 typedef struct s_tracer
 {
 	void			*mlx;
@@ -119,7 +128,9 @@ typedef struct s_tracer
 	t_coord			reflect_vec;
 	t_coord			normal;
 	t_coord			point;
-	double 			amb_color;
+	t_coord			final_coord;
+//	t_objects		*touched_object; //объект пересечение с которым ближе всего
+	t_coord 		amb_color;
 }				t_tracer;
 
 //HOOKS
@@ -189,7 +200,13 @@ t_coord	normalize(t_coord v1);
 
 double	scalar_product(t_coord v1, t_coord v2);
 t_coord init_vector(double x, double y, double z);
-t_coord init_vector_from_rgb(double x, double y, double z);
+t_coord init_vector_from_rgb(t_color color);
+
+t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, double
+radius);
+t_coord 	first_intersect_sphere(t_tracer *rt, t_coord dir);
+double	plaIntersect(t_coord cam, t_coord dir, t_plane *plane);
+t_coord first_intersect_plane(t_tracer *rt, t_coord dir);
 
 //MAIN
 int	unexpected_exit(const char *str, t_tracer *rt);
