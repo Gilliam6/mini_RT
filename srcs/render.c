@@ -55,28 +55,22 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 						   rt->camera->xyz);// координаты точек пересечения
 	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
 	rt->normal = normalize(vector_sub(rt->point, rt->final_coord));
-//	if (check_shadow(rt))
-//		diffuse = 0;
-//	else
-//	{
 	diffuse = scalar_product(rt->light_dir, rt->normal); // угол
 	// между нормалью и источником света
-	diffuse += compute_reflect(rt, dir);
-	diffuse *= rt->light->bright; // множитель яркости света
-	if (diffuse > 1.0)
-		diffuse = 1.0;
-	if (diffuse < 0)
-		diffuse = 0;
-//	}
+	diffuse = fmax(compute_reflect(rt, dir) + diffuse, 0);
+	diffuse = fmin(rt->light->bright * diffuse, 1.0); // множитель яркости света
 	if (check_shadow(rt))
 		diffuse *= 0.35;
 	diffuse = pow(diffuse, 0.45); // гамма коррекция
 
-//	color = init_vector_from_rgb(rt->sphere->color);// цвет фигуры
-	shadow = vector_pow(rt->final_color,init_vector(diffuse,
+	shadow = vector_pow(rt->final_color, init_vector(diffuse,
 													diffuse,
 													diffuse)
 	);//
+	shadow.x = fmax(shadow.x, shadow.x * rt->amb_color.x);
+	shadow.y = fmax(shadow.y, shadow.y * rt->amb_color.y);
+	shadow.z = fmax(shadow.z, shadow.z * rt->amb_color.z);
+
 	// изменение цвета фигуры под множитель всех изменений цвета
 //	shadow = vector_pow(shadow, rt->amb_color);
 	return(vector_in_color(shadow));
