@@ -60,20 +60,22 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	diffuse = fmax(compute_reflect(rt, dir) + diffuse, 0);
 	diffuse = fmin(rt->light->bright * diffuse, 1.0); // множитель яркости света
 	if (check_shadow(rt))
-		diffuse *= 0.35;
+//		return(0);
+		return(vector_in_color(vector_pow(rt->final_color, rt->amb_color)));
 	diffuse = pow(diffuse, 0.45); // гамма коррекция
 
 	shadow = vector_pow(rt->final_color, init_vector(diffuse,
 													diffuse,
 													diffuse)
 	);//
-	shadow.x = fmax(shadow.x, shadow.x * rt->amb_color.x);
-	shadow.y = fmax(shadow.y, shadow.y * rt->amb_color.y);
-	shadow.z = fmax(shadow.z, shadow.z * rt->amb_color.z);
+//	shadow.x = fmax(shadow.x, shadow.x * rt->amb_color.x);
+//	shadow.y = fmax(shadow.y, shadow.y * rt->amb_color.y);
+//	shadow.z = fmax(shadow.z, shadow.z * rt->amb_color.z);
 
 	// изменение цвета фигуры под множитель всех изменений цвета
 //	shadow = vector_pow(shadow, rt->amb_color);
-	return(vector_in_color(shadow));
+	return(fmax(vector_in_color(shadow), vector_in_color(vector_pow
+	(rt->final_color, rt->amb_color))));
 }
 
 void	render(t_tracer *rt)
