@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_main_struct.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 18:42:15 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/06 18:42:54 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini_RT.h"
 
-static inline void free_multi_obj2(t_tracer *rt, int flag)
+static inline void	free_multi_obj2(t_tracer *rt, int flag)
 {	
 	if (flag == 6)
 		free(rt->cyl);
@@ -10,14 +22,14 @@ static inline void free_multi_obj2(t_tracer *rt, int flag)
 		free(rt->sphere);
 }
 
-void free_multi_obj(t_tracer *rt, void *ptr, int flag)
+void	free_multi_obj(t_tracer *rt, void *ptr, int flag)
 {
-	void *copy;
+	void	*copy;
 
 	if (flag == 6)
 		copy = (t_cylinder *)ptr;
 	else if (flag == 5)
-		copy = (t_plane	*)ptr;
+		copy = (t_plane *)ptr;
 	else if (flag == 4)
 		copy = (t_sphere *)ptr;
 	while (ptr)
@@ -26,7 +38,7 @@ void free_multi_obj(t_tracer *rt, void *ptr, int flag)
 		if (flag == 6)
 			ptr = ((t_cylinder *)ptr)->next;
 		else if (flag == 5)
-			ptr = ((t_plane	*)ptr)->next;
+			ptr = ((t_plane *)ptr)->next;
 		else if (flag == 4)
 			ptr = ((t_sphere *)ptr)->next;
 		free(ptr);

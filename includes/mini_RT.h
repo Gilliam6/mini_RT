@@ -142,9 +142,9 @@ void	find_struct(t_coord coord, t_tracer *rt);
 double	ft_atod(char *str); //string to double convert
 
 //CHECK_STR
-double	check_double(char *str);
+int		check_double(char *str, int flag);
 int		check_ints(char *str);
-double	check_double_in_arr(char *str); // only commas, points and digits
+int		check_double_in_arr(char *str); // only commas, points and digits
 int		check_ony_one_int(char *str);
 int		check_argv(char *path);
 

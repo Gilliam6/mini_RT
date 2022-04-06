@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utilities.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 18:44:51 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/06 18:55:38 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini_RT.h"
 
 double	ft_atod(char *str)
@@ -52,10 +64,11 @@ int	check_argv(char *path)
 	char		test;
 
 	fd = open(path, O_RDONLY);
-	if (fd < 0 || check_path(path))
+	if (check_path(path) || fd < 0)
 		return (1);
 	if (read(fd, &test, 1) != 1)
 	{
+		printf("%s", READ_ERR);
 		close(fd);
 		return (1);
 	}

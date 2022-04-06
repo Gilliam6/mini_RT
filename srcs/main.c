@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 18:27:33 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/06 18:53:54 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini_RT.h"
 
 int	unexpected_exit(const char *str, t_tracer *rt)
@@ -40,13 +52,15 @@ int	main(int argc, char **argv)
 		exit (1);
 	}
 	if (check_argv(argv[1]))
-	{
-		printf("%s", READ_ERR);
 		exit (1);
-	}
 	rt = init_rt();
 	if (!parse_rt_file(&rt, argv[1]))
-		unexpected_exit(FILE_ERR, &rt);
+	{
+		printf("%s", FILE_ERR);
+		exit (1);
+	}
+		// unexpected_exit(FILE_ERR, &rt); ???? вместо 50 и 51
+
 	rt.mlx = mlx_init();
 	if (rt.mlx == NULL)
 		free_main_struct(&rt);
