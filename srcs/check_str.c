@@ -49,7 +49,7 @@ double	check_double_in_arr(char *str) // only commas, points and digits
 	// printf("double in str: %s\n", str);
 	while (str[++i])
 	{
-		if (str[0] == '-')
+		if (str[i] == '-')
 			++i;
 		if (!isdigit(str[i]) && str[i] != ',' && \
 		!(str[i] == '.' && i != 0))
