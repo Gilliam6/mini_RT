@@ -22,6 +22,7 @@
 # define PARSE_ERR			"File parse Error\n"
 # define RANGE_ERR			"Argument is out of range\n"
 # define READ_ERR			"Cannot read this file\n"
+# define OPEN_ERR			"Cannot open this file\n"
 
 //WINDOW SETTINGS
 # define WIN_SIZE_WIDTH		1024.0

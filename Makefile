@@ -31,7 +31,7 @@ INCLUDES = -I$(HEADER) -I$(HEADER_LIB) -Imlx/mlx.h
 #INCLUDES_BONUS = -I$(HEADER_BONUS) -I$(HEADER_LIB) -Imlx/mlx.h
 
 
-NAME = mini_RT
+NAME = miniRT
 #BONUS = bonus
 
 MLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
@@ -92,4 +92,5 @@ fclean: clean
 
 re : fclean all
 
+#bonus:
 .PHONY: all clean fclean re

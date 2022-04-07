@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:27:33 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/06 18:53:54 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/07 18:08:56 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int argc, char **argv)
 	if (!parse_rt_file(&rt, argv[1]))
 	{
 		printf("%s", FILE_ERR);
+		free_main_struct(&rt); // ???
 		exit (1);
 	}
 		// unexpected_exit(FILE_ERR, &rt); ???? вместо 50 и 51

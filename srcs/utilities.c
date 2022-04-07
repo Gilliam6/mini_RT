@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:44:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/06 18:55:38 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/07 15:57:12 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,16 @@ int	check_argv(char *path)
 	int			fd;
 	char		test;
 
-	fd = open(path, O_RDONLY);
-	if (check_path(path) || fd < 0)
+	if (check_path(path))
 		return (1);
-	if (read(fd, &test, 1) != 1)
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+	{
+		printf("%s", OPEN_ERR);
+		close(fd);
+		return (1);
+	}
+	if (fd < 0 || read(fd, &test, 1) != 1)
 	{
 		printf("%s", READ_ERR);
 		close(fd);
