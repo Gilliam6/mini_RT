@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:44:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/07 15:57:12 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/07 18:27:25 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,16 @@ static int	check_path(char *path)
 	return (0);
 }
 
-int	check_argv(char *path)
+int	check_argv(char *path, int argc)
 {
 	int			fd;
 	char		test;
 
+	if (argc != 2)
+	{
+		printf("%s", ARG_ERR);
+		return (1);
+	}
 	if (check_path(path))
 		return (1);
 	fd = open(path, O_RDONLY);

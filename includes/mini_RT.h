@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_RT.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:05:55 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/07 20:06:24 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINI_RT_H
 # define MINI_RT_H
 # include <math.h>
@@ -5,6 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <sys/time.h>
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 
@@ -31,6 +44,9 @@
 //BUTTONS
 # define ESC_BUTTON			53
 
+//RENDER
+# define EPSILON		0.001
+
 typedef struct s_data {
 	void	*img;
 	char	*addr;
@@ -44,6 +60,12 @@ typedef struct s_color {
 	int			G;
 	int			B;
 }				t_color;
+
+typedef struct s_vector2
+{
+	double	x;
+	double	y;
+}				t_vec2;
 
 typedef struct s_coordinate {
 	double		x;
@@ -97,11 +119,20 @@ typedef struct s_cylinder
 	struct s_cylinder	*next;
 }				t_cylinder;
 
+typedef struct s_objects
+{
+	t_plane		*plane;
+	double		plane_sol;
+	t_sphere	*sphere;
+	t_vec2		sphere_sol;
+	t_cylinder	*cyl;
+}				t_objects;
+
 typedef struct s_tracer
 {
 	void			*mlx;
 	void			*win;
-	t_img_data		*img;
+	t_img_data		img;
 	t_ambient		*ambient;
 	t_camera		*camera;
 	t_cylinder		*cyl;
@@ -109,6 +140,15 @@ typedef struct s_tracer
 	t_plane			*plane;
 	t_sphere		*sphere;
 	unsigned char	parsing_type;
+	t_vec2			solve;
+	t_coord			light_dir;
+	t_coord			reflect_vec;
+	t_coord			normal;
+	t_coord			point;
+	t_coord			final_coord;
+//	t_objects		*touched_object; //объект пересечение с которым ближе всего
+	t_coord			amb_color;
+	t_coord			final_color;
 }				t_tracer;
 
 //HOOKS
@@ -145,9 +185,9 @@ double	ft_atod(char *str); //string to double convert
 //CHECK_STR
 int		check_double(char *str, int flag);
 int		check_ints(char *str);
-int		check_double_in_arr(char *str); // only commas, points and digits
+int		check_double_in_arr(char *str);
 int		check_ony_one_int(char *str);
-int		check_argv(char *path);
+int		check_argv(char *path, int argc);
 
 //ADD LISTS
 void	add_sphere_back(t_sphere **lst, t_sphere *new);
@@ -157,7 +197,36 @@ void	add_cylinder_back(t_cylinder **lst, t_cylinder *new);
 //FREE
 void	free_main_struct(t_tracer *rt);
 
+//RENDER
+void	render(t_tracer *rt);
+void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color);
+int		colorize(t_color color, double bright);
+int		vector_in_color(t_coord vector);
+
+t_coord	vector_sub(t_coord vec1, t_coord vec2);
+t_coord	vector_sub_val(t_coord vec1, double vec2);
+
+t_coord	vector_pow(t_coord vec1, t_coord vec2);
+t_coord	vector_add(t_coord vec1, t_coord vec2);
+t_coord	vector_add_val(t_coord vec1, double vec2);
+
+t_coord	vector_del(t_coord vec1, t_coord vec2);
+t_coord	vector_pow_value(t_coord v1, double value);
+double	scalar_product(t_coord v1, t_coord v2);
+double	magnitude(t_coord v1);
+t_coord	normalize(t_coord v1);
+
+double	scalar_product(t_coord v1, t_coord v2);
+t_coord	init_vector(double x, double y, double z);
+t_coord	init_vector_from_rgb(t_color color);
+
+t_vec2	ray_intersect( t_coord cam, t_coord dir, \
+		t_coord sphere, double radius);
+int		first_intersect_sphere(t_tracer *rt, t_coord dir);
+double	plaintersect(t_coord cam, t_coord dir, t_plane *plane);
+int		first_intersect_plane(t_tracer *rt, t_coord dir);
+
 //MAIN
-int		unexpected_exit(const char *str, t_tracer *rt);
+void	unexpected_exit(const char *str, t_tracer *rt);
 
 #endif

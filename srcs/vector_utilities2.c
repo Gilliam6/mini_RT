@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_bright.c                                     :+:      :+:    :+:   */
+/*   vector_utilities2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 18:43:07 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/07 19:18:12 by pveeta           ###   ########.fr       */
+/*   Created: 2022/04/07 19:24:19 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/07 19:24:23 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini_RT.h"
 
-double	parse_bright(char **split)
+double	scalar_product(t_coord v1, t_coord v2)
 {
-	double	bright;
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+}
 
-	bright = ft_atod(split[0]);
-	if (bright < 0.0 || bright > 1.0)
-		return (-1.0);
-	return (bright);
+double	magnitude(t_coord v1)
+{
+	return (sqrt(v1.x * v1.x + v1.y * v1.y + v1.z * v1.z));
+}
+
+t_coord	normalize(t_coord v1)
+{
+	return (vector_pow_value(v1, 1 / magnitude(v1)));
 }

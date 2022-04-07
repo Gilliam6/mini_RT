@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:36:53 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/07 16:37:33 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/07 20:47:03 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	fill_sphere(char **split, t_tracer *rt)
 {
 	t_sphere	*sphere;
 
-	if (check_double_in_arr(split[0]) == -1 || \
-	check_double(split[1], 0) == -1 || \
-	check_ints(split[2]) == -1 || split[3])
+	if (!split[0] || check_double_in_arr(split[0]) == -1 || \
+	!split[1] || check_double(split[1], 0) == -1 || \
+	!split[2] || check_ints(split[2]) == -1 || split[3])
 	{
-		printf("%s\n", RANGE_ERR);
+		printf("Some problem in map with sphere\n");
 		return (0);
 	}
 	sphere = malloc(sizeof(t_sphere));
@@ -40,7 +40,7 @@ int	fill_sphere(char **split, t_tracer *rt)
 	sphere->color = parse_colors(split++);
 	if (!check_diameter(sphere->diameter) || sphere->color.R == -1 || split[0])
 	{
-		printf("some problem in argv(sphere)\n");
+		printf("Some problem in map with sphere\n");
 		return (0);
 	}
 	return (1);
@@ -50,11 +50,11 @@ int	fill_plane(char **split, t_tracer *rt)
 {
 	t_plane	*plane;
 
-	if (check_double_in_arr(split[0]) == -1 || \
-	check_double_in_arr(split[1]) == -1 || \
-	check_ints(split[2]) == -1 || split[3])
+	if (!split[0] || check_double_in_arr(split[0]) == -1 || \
+	!split[1] || check_double_in_arr(split[1]) == -1 || \
+	!split[2] || check_ints(split[2]) == -1 || split[3])
 	{
-		printf("%s\n", RANGE_ERR);
+		printf("Some problem in map with plane\n");
 		return (0);
 	}
 	plane = malloc(sizeof(t_plane));
@@ -64,7 +64,7 @@ int	fill_plane(char **split, t_tracer *rt)
 	if (!parse_coordinates(split++, rt, plane) || \
 	!parse_vector(split++, rt, plane))
 	{
-		printf("some problem in argv(plane)\n");
+		printf("Some problem in map with plane\n");
 		return (0);
 	}
 	plane->color = parse_colors(split++);
@@ -77,10 +77,11 @@ int	fill_cylinder(char **split, t_tracer *rt)
 {
 	t_cylinder	*cyl;
 
-	if (check_double_in_arr(split[0]) == -1 || \
-	check_double_in_arr(split[1]) == -1 || \
-	check_double(split[2], 0) || check_double(split[3], 0) || \
-	check_ints(split[4]) == -1 || split[5])
+	if (!split[0] || check_double_in_arr(split[0]) == -1 || \
+	!split[1] || check_double_in_arr(split[1]) == -1 || \
+	!split[2] || check_double(split[2], 0) || \
+	!split[3] || check_double(split[3], 0) || \
+	!split[4] || check_ints(split[4]) == -1 || split[5])
 		return (0);
 	cyl = malloc(sizeof(t_cylinder));
 	if (!cyl)

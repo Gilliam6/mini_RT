@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:40:29 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/06 18:42:02 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/07 20:39:26 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,25 @@ int	check_double_in_arr(char *str)
 {
 	char	**split;
 	int		i;
+	int		commas;
 
+	i = -1;
+	commas = 0;
+	while (str[++i])
+	{
+		if (str[i] == ',')
+			++commas;
+	}
+	if (commas != 2)
+		return (-1);
 	split = ft_split(str, ',');
 	i = -1;
 	while (split[++i])
 	{
 		if (check_double(split[i], 1) == -1 || i > 2)
 			return (-1 + stop_parse(split));
+		if (split[i + 1])
+			++commas;
 	}
 	return (0 + stop_parse(split));
 }
