@@ -33,6 +33,15 @@
 //RENDER
 # define EPSILON			0.001
 
+
+typedef struct s_cylinder_solution
+{
+	double x;
+	double y;
+	double z;
+	double w;
+} t_vec4;
+
 typedef struct s_data {
 	void	*img;
 	char	*addr;
@@ -126,7 +135,7 @@ typedef struct s_tracer
 	t_plane			*plane;
 	t_sphere		*sphere;
 	unsigned char	parsing_type;
-	t_vec2			solve;
+	double			solve;
 	t_coord			light_dir;
 	t_coord			reflect_vec;
 	t_coord			normal;
@@ -136,6 +145,22 @@ typedef struct s_tracer
 	t_coord 		amb_color;
 	t_coord			final_color;
 }				t_tracer;
+
+typedef struct s_calculation
+{
+	t_coord ca;
+	t_coord oc;
+	double caca;
+	double card;
+	double caoc;
+	double a;
+	double b;
+	double c;
+	double h;
+	double t;
+	double y;
+	t_coord xyz;
+} t_sphere_calc;
 
 //HOOKS
 int		keyboard_hook(int key, t_tracer *rt);
@@ -195,6 +220,7 @@ t_coord	vector_sub_val(t_coord vec1, double vec2);
 t_coord	vector_pow(t_coord vec1, t_coord vec2);
 t_coord	vector_add(t_coord vec1, t_coord vec2);
 t_coord	vector_add_val(t_coord vec1, double vec2);
+t_coord vector_del_value(t_coord v, double x);
 
 t_coord	vector_del(t_coord vec1, t_coord vec2);
 t_coord vector_pow_value(t_coord v1, double value);
@@ -211,6 +237,9 @@ radius);
 int 	first_intersect_sphere(t_tracer *rt, t_coord dir);
 double	plaIntersect(t_coord cam, t_coord dir, t_plane *plane);
 int 	first_intersect_plane(t_tracer *rt, t_coord dir);
+int first_intersect_cyl(t_tracer *rt, t_coord dir);
+
+int	check_intersects(t_tracer *rt, t_coord dir);
 
 //MAIN
 int	unexpected_exit(const char *str, t_tracer *rt);

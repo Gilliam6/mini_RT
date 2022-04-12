@@ -48,10 +48,10 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 
 //	first_intersect_sphere(rt, dir);
 //	rt->final_coord = first_intersect_plane(rt, dir);
-	if (!first_intersect_sphere(rt, dir))
+	if (!check_intersects(rt, dir))
 		return (0); //
 		// to do: Переделать! эмбиент лайт должен быть на сфере а не на фоне
-	rt->point = vector_add(vector_pow_value(dir, rt->solve.x),
+	rt->point = vector_add(vector_pow_value(dir, rt->solve),
 						   rt->camera->xyz);// координаты точек пересечения
 	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
 	rt->normal = normalize(vector_sub(rt->point, rt->final_coord));
@@ -68,13 +68,8 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 													diffuse,
 													diffuse)
 	);//
-//	shadow.x = fmax(shadow.x, shadow.x * rt->amb_color.x);
-//	shadow.y = fmax(shadow.y, shadow.y * rt->amb_color.y);
-//	shadow.z = fmax(shadow.z, shadow.z * rt->amb_color.z);
 
-	// изменение цвета фигуры под множитель всех изменений цвета
-//	shadow = vector_pow(shadow, rt->amb_color);
-	return(fmax(vector_in_color(shadow), vector_in_color(vector_pow
+	return (fmax(vector_in_color(shadow), vector_in_color(vector_pow
 	(rt->final_color, rt->amb_color))));
 }
 

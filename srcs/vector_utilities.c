@@ -89,3 +89,11 @@ t_coord init_vector_from_rgb(t_color color)
 	res.z = color.B / 255.0;
 	return (res);
 }
+
+t_coord vector_del_value(t_coord v, double x)
+{
+	v.x /= x;
+	v.y /= x;
+	v.z /= x;
+	return (v);
+}
