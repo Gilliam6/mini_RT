@@ -33,7 +33,6 @@ t_tracer	init_rt(void)
 int main(int argc, char **argv)
 {
 	t_tracer	rt;
-
 	if (argc != 2)
 		unexpected_exit(ARG_ERR, 0);
 	rt = init_rt();

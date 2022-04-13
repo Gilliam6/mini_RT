@@ -38,7 +38,7 @@ NAME = mini_RT
 
 MLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
-CFLAGS = -o3 -Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -g -Wall -Wextra -Werror
 
 RM = rm -f
 
@@ -65,19 +65,6 @@ $(OBJ_DIR)%.o: $(SRCS_DIR)%.c $(HEADER)
 $(LIBFT):
 		@echo "$(NAME): $(GREEN)Creating libft.a...$(RESET)"
 		@make -sC libft
-
-#$(BONUS): $(LIBFT) $(OBJ_DIR_BONUS) $(OBJ_BONUS)
-#		@gcc $(CFLAGS) libft/libft.a -I /usr/local/include $(INCLUDES_BONUS) $(OBJ_BONUS) $(MLX) -o $(BONUS)
-#		@echo "\n$(BONUS):$(GREEN)$(BONUS).o files were created$(RESET)"
-#		@echo "$(BONUS): $(GREEN)$(BONUS) was created$(RESET)"
-#
-#$(OBJ_DIR_BONUS):
-#		@mkdir -p $(OBJ_DIR_BONUS)
-#		@echo "$(BONUS): $(GREEN)$(OBJ_DIR_BONUS) was created$(RESET)"
-#
-#$(OBJ_DIR_BONUS)%.o: $(SRCS_DIR_BONUS)%.c $(HEADER_BONUS)
-#		@$(CC) $(CFLAGS) -c $(INCLUDES_BONUS) $< -o $@
-#		@echo "$(GREEN)/$(RESET)\c"
 
 clean:
 		@echo "$(NAME):$(GREEN) libft is cleaned$(RESET)"
