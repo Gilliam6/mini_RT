@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/13 17:48:30 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/13 22:43:16 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini_RT.h"
+
 void	print_vector(t_coord v)
 {
 	printf("%f x\n%f y\n%f z\n", v.x, v.y, v.z);
@@ -7,8 +20,9 @@ void	print_vector(t_coord v)
 double	compute_reflect(t_tracer *rt, t_coord dir)
 {
 	double	reflect;
-	rt->reflect_vec = vector_pow_value(rt->normal, scalar_product(dir, rt->normal)
-	* 2.0);
+
+	rt->reflect_vec = vector_pow_value(rt->normal, \
+	scalar_product(dir, rt->normal) * 2.0);
 	rt->reflect_vec = vector_sub(dir, rt->reflect_vec);
 	reflect = scalar_product(rt->light_dir, rt->reflect_vec);
 	if (reflect < 0)
@@ -17,12 +31,11 @@ double	compute_reflect(t_tracer *rt, t_coord dir)
 	return (reflect);
 }
 
-int	check_shadow(t_tracer *rt) // check это сфера от которой
-// проверяем тень
+int	check_shadow(t_tracer *rt) // check это сфера от которой проверяем тень
 {
-	t_sphere *start; // tmp переменная для пробега по сферам
-	t_vec2 points;
-	t_coord shadow;
+	t_sphere	*start; // tmp переменная для пробега по сферам
+	t_vec2		points;
+	t_coord		shadow;
 
 	if (scalar_product(rt->light_dir, rt->normal) < 0)
 		shadow = vector_sub_val(rt->point, 0.001);
@@ -31,10 +44,10 @@ int	check_shadow(t_tracer *rt) // check это сфера от которой
 	start = rt->sphere;
 	while (start)
 	{
-		points = ray_intersect(shadow, rt->light_dir, start->xyz,
-							   start->diameter / 2.0);
+		points = ray_intersect(shadow, rt->light_dir, \
+		start->xyz, start->diameter / 2.0);
 		if (points.x > 0)
-			return(1);
+			return (1);
 		start = start->next;
 	}
 	return (0);
@@ -43,7 +56,7 @@ int	check_shadow(t_tracer *rt) // check это сфера от которой
 int	cast_ray(t_tracer *rt, t_coord dir)
 {
 	t_coord	shadow;
-	double diffuse;
+	double	diffuse;
 //	t_coord	color;
 
 //	first_intersect_sphere(rt, dir);
@@ -51,8 +64,8 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	if (!check_intersects(rt, dir))
 		return (0); //
 		// to do: Переделать! эмбиент лайт должен быть на сфере а не на фоне
-	rt->point = vector_add(vector_pow_value(dir, rt->solve),
-						   rt->camera->xyz);// координаты точек пересечения
+	rt->point = vector_add(vector_pow_value(dir, rt->solve), \
+		rt->camera->xyz);// координаты точек пересечения
 	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
 	rt->normal = normalize(vector_sub(rt->point, rt->final_coord));
 	diffuse = scalar_product(rt->light_dir, rt->normal); // угол
@@ -75,13 +88,13 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 
 void	render(t_tracer *rt)
 {
-	int	x;
-	int	y;
-	t_coord ray_direct;
-	t_coord dir;
+	int		x;
+	int		y;
+	t_coord	ray_direct;
+	t_coord	dir;
 
-	rt->amb_color = vector_pow_value(init_vector_from_rgb(rt->ambient->color)
-			, rt->ambient->bright);
+	rt->amb_color = vector_pow_value(init_vector_from_rgb(rt->ambient->color), \
+		rt->ambient->bright);
 	ray_direct.z = rt->camera->vector.z;
 	y = 0;
 	while (y < WIN_SIZE_HEIGHT)
@@ -90,8 +103,8 @@ void	render(t_tracer *rt)
 		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)y) / WIN_SIZE_HEIGHT;
 		while (x < WIN_SIZE_WIDTH)
 		{
-			ray_direct.x = (((double)x - WIN_SIZE_WIDTH/2) / WIN_SIZE_WIDTH) *
-					WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
+			ray_direct.x = (((double)x - WIN_SIZE_WIDTH / 2) / WIN_SIZE_WIDTH) \
+				* WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
 			dir = normalize(ray_direct);
 			my_mlx_pixel_put(rt, x, y, cast_ray(rt, dir));
 			x++;
@@ -100,5 +113,3 @@ void	render(t_tracer *rt)
 	}
 	mlx_put_image_to_window(rt->mlx, rt->win, rt->img.img, 0, 0);
 }
-
-

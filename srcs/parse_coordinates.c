@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_coordinates.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 18:43:33 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/13 17:39:50 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini_RT.h"
 
 int	check_xyz_line(char *xyz)
@@ -28,7 +40,7 @@ int	check_xyz(char **xyz)
 	int	j;
 
 	j = 0;
-	while(xyz[j])
+	while (xyz[j])
 	{
 		if (!check_xyz_line(xyz[j]))
 			return (0);
@@ -41,13 +53,11 @@ int	stop_parse(char **xyz)
 {
 	int	i;
 
-	printf("LAUNCH STOP PARSE\n");
 	if (xyz)
 	{
 		i = 0;
 		while (xyz[i])
 		{
-			printf("xyz[%d] = %s\n", i, xyz[i]);
 			free(xyz[i]);
 			i++;
 		}
@@ -61,7 +71,7 @@ void	find_struct_xyz(t_coord coord, t_tracer *rt, void *ptr)
 	t_plane		*copy_pl;
 	t_cylinder	*copy_cyl;
 	t_sphere	*copy_sp;
-	
+
 	if (rt->parsing_type == 2)
 		rt->camera->xyz = coord;
 	else if (rt->parsing_type == 3)
@@ -71,19 +81,16 @@ void	find_struct_xyz(t_coord coord, t_tracer *rt, void *ptr)
 		copy_sp = (t_sphere *)ptr;
 		copy_sp->xyz = coord;
 	}
-		// rt->sphere->xyz = coord;
 	else if (rt->parsing_type == 5)
 	{
 		copy_pl = (t_plane *)ptr;
 		copy_pl->xyz = coord;
 	}
-		// rt->plane->xyz = coord;
 	else if (rt->parsing_type == 6)
 	{
 		copy_cyl = (t_cylinder *)ptr;
 		copy_cyl->xyz = coord;
 	}
-		// rt->cyl->xyz = coord;
 }
 
 int	parse_coordinates(char **split, t_tracer *rt, void *ptr)

@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_RT.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/13 18:04:48 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/13 22:24:45 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINI_RT_H
 # define MINI_RT_H
 # include <math.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <sys/time.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
@@ -22,6 +35,7 @@
 # define PARSE_ERR			"File parse Error\n"
 # define RANGE_ERR			"Argument is out of range\n"
 # define READ_ERR			"Cannot read this file\n"
+# define OPEN_ERR			"Cannot open this file\n"
 
 //WINDOW SETTINGS
 # define WIN_SIZE_WIDTH		1024.0
@@ -33,14 +47,13 @@
 //RENDER
 # define EPSILON			0.001
 
-
 typedef struct s_cylinder_solution
 {
-	double x;
-	double y;
-	double z;
-	double w;
-} t_vec4;
+	double	x;
+	double	y;
+	double	z;
+	double	w;
+}				t_vec4;
 
 typedef struct s_data {
 	void	*img;
@@ -51,9 +64,9 @@ typedef struct s_data {
 }				t_img_data;
 
 typedef struct s_color {
-	int R;
-	int G;
-	int B;
+	int	r;
+	int	g;
+	int	b;
 }				t_color;
 
 typedef struct s_vector2
@@ -63,23 +76,23 @@ typedef struct s_vector2
 }				t_vec2;
 
 typedef struct s_coordinate {
-	double x;
-	double y;
-	double z;
+	double	x;
+	double	y;
+	double	z;
 }				t_coord;
 
 typedef struct s_light
 {
 	t_coord		xyz;
-	double 		bright;
+	double		bright;
 	t_color		color;
 }				t_light;
 
 typedef struct s_camera
 {
 	t_coord		xyz;
-	t_coord 	vector;
-	int			FOV;
+	t_coord		vector;
+	int			fov;
 }				t_camera;
 
 typedef struct s_ambient
@@ -117,11 +130,11 @@ typedef struct s_cylinder
 typedef struct s_objects
 {
 	t_plane		*plane;
-	double 		plane_sol;
+	double		plane_sol;
 	t_sphere	*sphere;
-	t_vec2 		sphere_sol;
+	t_vec2		sphere_sol;
 	t_cylinder	*cyl;
-} t_objects;
+}				t_objects;
 
 typedef struct s_tracer
 {
@@ -142,29 +155,29 @@ typedef struct s_tracer
 	t_coord			point;
 	t_coord			final_coord;
 //	t_objects		*touched_object; //объект пересечение с которым ближе всего
-	t_coord 		amb_color;
+	t_coord			amb_color;
 	t_coord			final_color;
 }				t_tracer;
 
 typedef struct s_calculation
 {
-	t_coord ca;
-	t_coord oc;
-	double caca;
-	double card;
-	double caoc;
-	double a;
-	double b;
-	double c;
-	double h;
-	double t;
-	double y;
-	t_coord xyz;
-} t_sphere_calc;
+	t_coord		ca;
+	t_coord		oc;
+	double		caca;
+	double		card;
+	double		caoc;
+	double		a;
+	double		b;
+	double		c;
+	double		h;
+	double		t;
+	double		y;
+	t_coord		xyz;
+}				t_sphere_calc;
 
 //HOOKS
 int		keyboard_hook(int key, t_tracer *rt);
-int 	destroy_window(t_tracer *rt);
+int		destroy_window(t_tracer *rt);
 
 //PARSER
 int		parse_rt_file(t_tracer *rt, char *path);
@@ -194,11 +207,11 @@ void	find_struct(t_coord coord, t_tracer *rt);
 double	ft_atod(char *str); //string to double convert
 
 //CHECK_STR
-double	check_double(char *str);
+int		check_double(char *str, int flag);
 int		check_ints(char *str);
-double	check_double_in_arr(char *str); // only commas, points and digits
+int		check_double_in_arr(char *str);
 int		check_ony_one_int(char *str);
-int		check_argv(char *path);
+int		check_argv(char *path, int argc);
 
 //ADD LISTS
 void	add_sphere_back(t_sphere **lst, t_sphere *new);
@@ -212,7 +225,7 @@ void	free_main_struct(t_tracer *rt);
 void	render(t_tracer *rt);
 void	my_mlx_pixel_put(t_tracer *rt, int x, int y, int color);
 int		colorize(t_color color, double bright);
-int	vector_in_color(t_coord vector);
+int		vector_in_color(t_coord vector);
 
 t_coord	vector_sub(t_coord vec1, t_coord vec2);
 t_coord	vector_sub_val(t_coord vec1, double vec2);
@@ -220,28 +233,27 @@ t_coord	vector_sub_val(t_coord vec1, double vec2);
 t_coord	vector_pow(t_coord vec1, t_coord vec2);
 t_coord	vector_add(t_coord vec1, t_coord vec2);
 t_coord	vector_add_val(t_coord vec1, double vec2);
-t_coord vector_del_value(t_coord v, double x);
+t_coord	vector_del_value(t_coord v, double x);
 
 t_coord	vector_del(t_coord vec1, t_coord vec2);
-t_coord vector_pow_value(t_coord v1, double value);
+t_coord	vector_pow_value(t_coord v1, double value);
 double	scalar_product(t_coord v1, t_coord v2);
 double	magnitude(t_coord v1);
 t_coord	normalize(t_coord v1);
 
 double	scalar_product(t_coord v1, t_coord v2);
-t_coord init_vector(double x, double y, double z);
-t_coord init_vector_from_rgb(t_color color);
+t_coord	init_vector(double x, double y, double z);
+t_coord	init_vector_from_rgb(t_color color);
 
-t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, double
-radius);
-int 	first_intersect_sphere(t_tracer *rt, t_coord dir);
+t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, \
+	double radius);
+int		first_intersect_sphere(t_tracer *rt, t_coord dir);
 double	plaIntersect(t_coord cam, t_coord dir, t_plane *plane);
-int 	first_intersect_plane(t_tracer *rt, t_coord dir);
-int first_intersect_cyl(t_tracer *rt, t_coord dir);
-
-int	check_intersects(t_tracer *rt, t_coord dir);
+int		first_intersect_plane(t_tracer *rt, t_coord dir);
+int		first_intersect_cyl(t_tracer *rt, t_coord dir);
+int		check_intersects(t_tracer *rt, t_coord dir);
 
 //MAIN
-int	unexpected_exit(const char *str, t_tracer *rt);
+void	unexpected_exit(const char *str, t_tracer *rt);
 
 #endif

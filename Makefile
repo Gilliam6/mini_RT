@@ -1,6 +1,6 @@
 SRCS_LIST = main.c basic_hooks.c parser.c check_line.c fill_object.c fill_environ.c parse_bright.c utilities.c \
 parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c render.c mlx_set_color.c \
-vector_utilities.c vector_utilities2.c check_str.c add_list.c sphere_intersect.c plane_intersect.c check_intersects.c\
+vector_utilities.c vector_utilities2.c vector_utilities3.c check_str.c add_list.c sphere_intersect.c plane_intersect.c check_intersects.c\
 cylinder_intersect.c
 
 SRCS_DIR = srcs/
@@ -33,7 +33,7 @@ INCLUDES = -I$(HEADER) -I$(HEADER_LIB) -Imlx/mlx.h
 #INCLUDES_BONUS = -I$(HEADER_BONUS) -I$(HEADER_LIB) -Imlx/mlx.h
 
 
-NAME = mini_RT
+NAME = miniRT
 #BONUS = bonus
 
 MLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit

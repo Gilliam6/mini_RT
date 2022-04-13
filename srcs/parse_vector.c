@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_vector.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 18:44:40 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/13 17:40:46 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini_RT.h"
 
 int	check_vector(t_coord coord)
@@ -23,13 +35,11 @@ void	find_struct_vector(t_coord coord, t_tracer *rt, void *ptr)
 		copy_pl = (t_plane *)ptr;
 		copy_pl->vector = coord;
 	}
-		// rt->plane->vector = coord;
 	else if (rt->parsing_type == 6)
 	{
 		copy_cyl = (t_cylinder *)ptr;
 		copy_cyl->vector = coord;
 	}
-		// rt->cyl->vector = coord;
 }
 
 int	parse_vector(char **split, t_tracer *rt, void *ptr)
