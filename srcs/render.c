@@ -44,13 +44,8 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 {
 	t_coord	shadow;
 	double diffuse;
-//	t_coord	color;
-
-//	first_intersect_sphere(rt, dir);
-//	rt->final_coord = first_intersect_plane(rt, dir);
 	if (!check_intersects(rt, dir))
 		return (0); //
-		// to do: Переделать! эмбиент лайт должен быть на сфере а не на фоне
 	rt->point = vector_add(vector_pow_value(dir, rt->solve),
 						   rt->camera->xyz);// координаты точек пересечения
 	rt->light_dir = normalize(vector_sub(rt->light->xyz, rt->point));
@@ -68,7 +63,6 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 													diffuse,
 													diffuse)
 	);//
-
 	return (fmax(vector_in_color(shadow), vector_in_color(vector_pow
 	(rt->final_color, rt->amb_color))));
 }
@@ -87,11 +81,12 @@ void	render(t_tracer *rt)
 	while (y < WIN_SIZE_HEIGHT)
 	{
 		x = 0;
-		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)y) / WIN_SIZE_HEIGHT;
+		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)(y + rt->move_y)) /
+				WIN_SIZE_HEIGHT;
 		while (x < WIN_SIZE_WIDTH)
 		{
-			ray_direct.x = (((double)x - WIN_SIZE_WIDTH/2) / WIN_SIZE_WIDTH) *
-					WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
+			ray_direct.x = (((double)(x + rt->move_x) - WIN_SIZE_WIDTH/2) /
+					WIN_SIZE_WIDTH) * WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
 			dir = normalize(ray_direct);
 			my_mlx_pixel_put(rt, x, y, cast_ray(rt, dir));
 			x++;

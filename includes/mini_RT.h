@@ -29,6 +29,16 @@
 
 //BUTTONS
 # define ESC_BUTTON			53
+# define U_BUTTON			32
+# define UP_BUTTON			125
+# define DOWN_BUTTON		126
+# define RIGHT_BUTTON		124
+# define LEFT_BUTTON		123
+# define PLUS_BUTTON		24
+# define MINUS_BUTTON		27
+# define Z_BUTTON			6
+# define X_BUTTON			7
+# define C_BUTTON			8
 
 //RENDER
 # define EPSILON			0.001
@@ -141,9 +151,10 @@ typedef struct s_tracer
 	t_coord			normal;
 	t_coord			point;
 	t_coord			final_coord;
-//	t_objects		*touched_object; //объект пересечение с которым ближе всего
 	t_coord 		amb_color;
 	t_coord			final_color;
+	int 			move_x;
+	int				move_y;
 }				t_tracer;
 
 typedef struct s_calculation

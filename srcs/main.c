@@ -18,6 +18,8 @@ t_tracer	init_rt(void)
 {
 	t_tracer	rt;
 
+	rt.move_x = 0;
+	rt.move_y = 0;
 	rt.mlx = 0;
 	rt.win = 0;
 	rt.light = 0;
@@ -37,10 +39,8 @@ int main(int argc, char **argv)
 	if (argc != 2)
 		unexpected_exit(ARG_ERR, 0);
 	rt = init_rt();
-
 	if (!parse_rt_file(&rt, argv[1]))
 		unexpected_exit(FILE_ERR, &rt);
-
 	rt.mlx = mlx_init();
 	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
 	rt.img.img = mlx_new_image(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT);

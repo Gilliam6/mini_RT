@@ -38,7 +38,7 @@ NAME = mini_RT
 
 MLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
-CFLAGS = -o3 -Wall -Wextra -Werror
+CFLAGS = -Ofast -Wall -Wextra -Werror
 
 RM = rm -f
 
