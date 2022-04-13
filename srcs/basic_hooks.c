@@ -17,7 +17,7 @@ void new_light_xyz(t_tracer *rt)
 
 int	keyboard_hook(int key, t_tracer *rt)
 {
-	printf("%d\n", key);
+//	printf("%d\n", key);
 	if (key == ESC_BUTTON)
 		destroy_window(rt);
 	if (key == U_BUTTON)
@@ -30,6 +30,10 @@ int	keyboard_hook(int key, t_tracer *rt)
 		rt->move_y -= 50;
 	if (key == UP_BUTTON)
 		rt->move_y += 50;
+	if (key == PLUS_BUTTON)
+		rt->camera->FOV += 1;
+	if (key == MINUS_BUTTON)
+		rt->camera->FOV -= 1;
 	render(rt);
 	return (0);
 }

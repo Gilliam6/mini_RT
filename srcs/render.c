@@ -55,7 +55,6 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	diffuse = fmax(compute_reflect(rt, dir) + diffuse, 0);
 	diffuse = fmin(rt->light->bright * diffuse, 1.0); // множитель яркости света
 	if (check_shadow(rt))
-//		return(0);
 		return(vector_in_color(vector_pow(rt->final_color, rt->amb_color)));
 	diffuse = pow(diffuse, 0.45); // гамма коррекция
 
@@ -74,6 +73,10 @@ void	render(t_tracer *rt)
 	t_coord ray_direct;
 	t_coord dir;
 
+	double ratio = WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
+	double radiana = (rt->camera->FOV / 2 * M_PI) / 180;
+	double FOV = WIN_SIZE_WIDTH / tan(radiana);
+//	double FOV_2 = tan(radiana/2) * WIN_SIZE_WIDTH;
 	rt->amb_color = vector_pow_value(init_vector_from_rgb(rt->ambient->color)
 			, rt->ambient->bright);
 	ray_direct.z = rt->camera->vector.z;
@@ -81,12 +84,12 @@ void	render(t_tracer *rt)
 	while (y < WIN_SIZE_HEIGHT)
 	{
 		x = 0;
-		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)(y + rt->move_y)) /
+		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)y - rt->move_y) /
 				WIN_SIZE_HEIGHT;
 		while (x < WIN_SIZE_WIDTH)
 		{
-			ray_direct.x = (((double)(x + rt->move_x) - WIN_SIZE_WIDTH/2) /
-					WIN_SIZE_WIDTH) * WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
+			ray_direct.x = ((double)(x + rt->move_x) - WIN_SIZE_WIDTH/2) /
+					FOV / ratio;
 			dir = normalize(ray_direct);
 			my_mlx_pixel_put(rt, x, y, cast_ray(rt, dir));
 			x++;
