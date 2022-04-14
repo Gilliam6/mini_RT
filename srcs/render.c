@@ -12,11 +12,6 @@
 
 #include "../includes/mini_RT.h"
 
-void	print_vector(t_coord v)
-{
-	printf("%f x\n%f y\n%f z\n", v.x, v.y, v.z);
-}
-
 double	compute_reflect(t_tracer *rt, t_coord dir)
 {
 	double	reflect;
@@ -85,27 +80,23 @@ void	render(t_tracer *rt)
 	int		x;
 	int		y;
 	t_coord	ray_direct;
-	t_coord	dir;
+	t_fov	ray;
 
-	double ratio = WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
-	double radiana = (rt->camera->FOV / 2 * M_PI) / 180;
-	double FOV = WIN_SIZE_WIDTH / tan(radiana);
-//	double FOV_2 = tan(radiana/2) * WIN_SIZE_WIDTH;
 	rt->amb_color = vector_pow_value(init_vector_from_rgb(rt->ambient->color)
 			, rt->ambient->bright);
+	ray.radiana = (rt->camera->fov / 2 * M_PI) / 180;
+	ray.fov_x = WIN_WIDTH / tan(ray.radiana) / (WIN_WIDTH /WIN_HEIGHT);
+	ray.fov_y = WIN_HEIGHT / tan(ray.radiana);
 	ray_direct.z = rt->camera->vector.z;
 	y = 0;
-	while (y < WIN_SIZE_HEIGHT)
+	while (y < WIN_HEIGHT)
 	{
 		x = 0;
-		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)y - rt->move_y) /
-				WIN_SIZE_HEIGHT;
-		while (x < WIN_SIZE_WIDTH)
+		ray_direct.y = (WIN_HEIGHT / 2 - y - rt->move_y) / ray.fov_y;
+		while (x < WIN_WIDTH)
 		{
-			ray_direct.x = ((double)(x + rt->move_x) - WIN_SIZE_WIDTH/2) /
-					FOV / ratio;
-			dir = normalize(ray_direct);
-			my_mlx_pixel_put(rt, x, y, cast_ray(rt, dir));
+			ray_direct.x = ((x + rt->move_x) - WIN_WIDTH / 2) / ray.fov_x;
+			my_mlx_pixel_put(rt, x, y, cast_ray(rt, normalize(ray_direct)));
 			x++;
 		}
 		y++;

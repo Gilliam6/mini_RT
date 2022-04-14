@@ -60,10 +60,10 @@ int	main(int argc, char **argv)
 	rt.mlx = mlx_init();
 	if (rt.mlx == NULL)
 		unexpected_exit("Cannot init mlx", &rt);
-	rt.win = mlx_new_window(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT, "mini_RT");
+	rt.win = mlx_new_window(rt.mlx, WIN_WIDTH, WIN_HEIGHT, "mini_RT");
 	if (rt.win == NULL)
 		unexpected_exit("Cannot create mlx window", &rt);
-	rt.img.img = mlx_new_image(rt.mlx, WIN_SIZE_WIDTH, WIN_SIZE_HEIGHT);
+	rt.img.img = mlx_new_image(rt.mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (rt.img.img == NULL)
 		unexpected_exit("Cannot create mlx image", &rt);
 	rt.img.addr = mlx_get_data_addr(rt.img.img, &rt.img.bits_per_pixel, \

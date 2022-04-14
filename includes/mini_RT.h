@@ -38,8 +38,8 @@
 # define OPEN_ERR			"Cannot open this file\n"
 
 //WINDOW SETTINGS
-# define WIN_SIZE_WIDTH		1024.0
-# define WIN_SIZE_HEIGHT	800.0
+# define WIN_WIDTH		1024.0
+# define WIN_HEIGHT	800.0
 
 //BUTTONS
 # define ESC_BUTTON			53
@@ -53,6 +53,7 @@
 # define Z_BUTTON			6
 # define X_BUTTON			7
 # define C_BUTTON			8
+# define SPACE				49
 
 //RENDER
 # define EPSILON			0.001
@@ -146,6 +147,12 @@ typedef struct s_objects
 	t_cylinder	*cyl;
 }				t_objects;
 
+typedef struct s_fov
+{
+	double fov_x;
+	double fov_y;
+	double radiana;
+} t_fov;
 typedef struct s_tracer
 {
 	void			*mlx;
@@ -169,6 +176,7 @@ typedef struct s_tracer
 	t_coord			final_color;
 	int 			move_x;
 	int				move_y;
+	unsigned char	flag;
 }				t_tracer;
 
 typedef struct s_calculation
@@ -259,10 +267,10 @@ t_coord	init_vector_from_rgb(t_color color);
 
 t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, \
 	double radius);
-int		first_intersect_sphere(t_tracer *rt, t_coord dir);
+void		first_intersect_sphere(t_tracer *rt, t_coord dir);
 double	plaIntersect(t_coord cam, t_coord dir, t_plane *plane);
-int		first_intersect_plane(t_tracer *rt, t_coord dir);
-int		first_intersect_cyl(t_tracer *rt, t_coord dir);
+void		first_intersect_plane(t_tracer *rt, t_coord dir);
+void		first_intersect_cyl(t_tracer *rt, t_coord dir);
 int		check_intersects(t_tracer *rt, t_coord dir);
 
 //MAIN
