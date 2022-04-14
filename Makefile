@@ -1,6 +1,6 @@
 SRCS_LIST = main.c basic_hooks.c parser.c check_line.c fill_object.c fill_environ.c parse_bright.c utilities.c \
 parse_coordinates.c parse_colors.c parse_vector.c free_main_struct.c parse_fov.c render.c mlx_set_color.c \
-vector_utilities.c vector_utilities2.c check_str.c add_list.c sphere_intersect.c plane_intersect.c check_intersects.c\
+vector_utilities.c vector_utilities2.c vector_utilities3.c check_str.c add_list.c sphere_intersect.c plane_intersect.c check_intersects.c\
 cylinder_intersect.c
 
 SRCS_DIR = srcs/
@@ -8,37 +8,25 @@ SRCS_DIR_BONUS = srcs_b/
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
-#BONUS_LIST = burning_ship.c calculator.c\
-#             		colorize.c draw_bonus.c\
-#             		fractol.c hooks.c\
-#             		init.c Julia.c\
-#             		Mandelbroth.c utils.c
-#BONUS_SRCS = $(addprefix $(SRCS_DIR_BONUS), $(BONUS_LIST))
 
 
 OBJ_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
 OBJ_DIR = objects/
-#OBJ_DIR_BONUS = objects_bonus/
 OBJ = $(addprefix $(OBJ_DIR), $(OBJ_LIST))
 
-#OBJ_LIST_BONUS = $(patsubst %.c, %.o, $(BONUS_LIST))
-#OBJ_BONUS = $(addprefix $(OBJ_DIR_BONUS), $(OBJ_LIST_BONUS))
 
 LIBFT = libft/libft.a
 HEADER = includes/mini_RT.h
 HEADER_LIB = libft/libft.h
-#HEADER_BONUS = includes/fractol_bonus.h
 
 INCLUDES = -I$(HEADER) -I$(HEADER_LIB) -Imlx/mlx.h
-#INCLUDES_BONUS = -I$(HEADER_BONUS) -I$(HEADER_LIB) -Imlx/mlx.h
 
 
 NAME = mini_RT
-#BONUS = bonus
 
 MLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
-CFLAGS = -fsanitize=address -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 

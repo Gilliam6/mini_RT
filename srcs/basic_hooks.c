@@ -1,7 +1,18 @@
-#include "../includes/mini_RT.h"
-#include <sys/time.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   basic_hooks.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 18:39:46 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/13 17:35:05 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int destroy_window(t_tracer *rt)
+#include "../includes/mini_RT.h"
+
+int	destroy_window(t_tracer *rt)
 {
 	mlx_destroy_window(rt->mlx, rt->win);
 	exit(0);
@@ -9,16 +20,15 @@ int destroy_window(t_tracer *rt)
 
 int	keyboard_hook(int key, t_tracer *rt)
 {
+	struct timeval	tv;
+
 	if (key == ESC_BUTTON)
 		destroy_window(rt);
 	if (key == 32)
 	{
-		struct timeval tv;
 		gettimeofday(&tv, 0);
 		rt->light->xyz.y = tv.tv_usec / 10000 % 20;
 		rt->light->xyz.x = tv.tv_usec / 10000 % 20;
-
-//		printf("%d\n", key);
 		render(rt);
 	}
 	return (0);
