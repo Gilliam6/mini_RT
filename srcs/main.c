@@ -31,6 +31,8 @@ t_tracer	init_rt(void)
 {
 	t_tracer	rt;
 
+	rt.move_x = 0;
+	rt.move_y = 0;
 	rt.solve = 0;
 	rt.mlx = 0;
 	rt.win = 0;

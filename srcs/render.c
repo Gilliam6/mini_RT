@@ -56,11 +56,7 @@ int	check_shadow(t_tracer *rt) // check это сфера от которой п
 int	cast_ray(t_tracer *rt, t_coord dir)
 {
 	t_coord	shadow;
-	double	diffuse;
-//	t_coord	color;
-
-//	first_intersect_sphere(rt, dir);
-//	rt->final_coord = first_intersect_plane(rt, dir);
+	double diffuse;
 	if (!check_intersects(rt, dir))
 		return (0); //
 		// to do: Переделать! эмбиент лайт должен быть на сфере а не на фоне
@@ -73,7 +69,6 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 	diffuse = fmax(compute_reflect(rt, dir) + diffuse, 0);
 	diffuse = fmin(rt->light->bright * diffuse, 1.0); // множитель яркости света
 	if (check_shadow(rt))
-//		return(0);
 		return(vector_in_color(vector_pow(rt->final_color, rt->amb_color)));
 	diffuse = pow(diffuse, 0.45); // гамма коррекция
 
@@ -81,7 +76,6 @@ int	cast_ray(t_tracer *rt, t_coord dir)
 													diffuse,
 													diffuse)
 	);//
-
 	return (fmax(vector_in_color(shadow), vector_in_color(vector_pow
 	(rt->final_color, rt->amb_color))));
 }
@@ -93,18 +87,23 @@ void	render(t_tracer *rt)
 	t_coord	ray_direct;
 	t_coord	dir;
 
-	rt->amb_color = vector_pow_value(init_vector_from_rgb(rt->ambient->color), \
-		rt->ambient->bright);
+	double ratio = WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
+	double radiana = (rt->camera->FOV / 2 * M_PI) / 180;
+	double FOV = WIN_SIZE_WIDTH / tan(radiana);
+//	double FOV_2 = tan(radiana/2) * WIN_SIZE_WIDTH;
+	rt->amb_color = vector_pow_value(init_vector_from_rgb(rt->ambient->color)
+			, rt->ambient->bright);
 	ray_direct.z = rt->camera->vector.z;
 	y = 0;
 	while (y < WIN_SIZE_HEIGHT)
 	{
 		x = 0;
-		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)y) / WIN_SIZE_HEIGHT;
+		ray_direct.y = (WIN_SIZE_HEIGHT / 2 - (double)y - rt->move_y) /
+				WIN_SIZE_HEIGHT;
 		while (x < WIN_SIZE_WIDTH)
 		{
-			ray_direct.x = (((double)x - WIN_SIZE_WIDTH / 2) / WIN_SIZE_WIDTH) \
-				* WIN_SIZE_WIDTH / WIN_SIZE_HEIGHT;
+			ray_direct.x = ((double)(x + rt->move_x) - WIN_SIZE_WIDTH/2) /
+					FOV / ratio;
 			dir = normalize(ray_direct);
 			my_mlx_pixel_put(rt, x, y, cast_ray(rt, dir));
 			x++;
