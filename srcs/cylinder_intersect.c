@@ -14,20 +14,14 @@
 
 t_coord	pa(t_cylinder *cyl)
 {
-	t_coord	pa;
-
-	pa = vector_add(cyl->xyz, vector_pow_value(cyl->vector, \
-		cyl->height / 2));
-	return (pa);
+	return (vector_add(cyl->xyz, vector_pow_value(cyl->vector, \
+		cyl->height / 2)));
 }
 
 t_coord	pb(t_cylinder *cyl)
 {
-	t_coord	pb;
-
-	pb = vector_sub(cyl->xyz, vector_pow_value(cyl->vector, \
-		cyl->height / 2));
-	return (pb);
+	return (vector_add(cyl->xyz, vector_pow_value(cyl->vector, \
+		-cyl->height / 2)));
 }
 
 t_vec4	init_vec4(double x, double y, double z, double w)
@@ -60,11 +54,11 @@ t_sphere_calc	what_is_h(t_coord cam, t_coord dir, t_coord pa, \
 	return (final);
 }
 
-t_vec4	cylintersect(t_coord cam, t_coord dir, t_coord pa, t_coord pb, double r)
+t_vec4	cylintersect(t_coord cam, t_coord dir, t_papb papb, double r)
 {
 	t_sphere_calc	final;
 
-	final = what_is_h(cam, dir, pa, pb, r);
+	final = what_is_h(cam, dir, papb.pb, papb.pa, r);
 	if (final.h < 0)
 		return (init_vec4(-1.0, -1.0, -1.0, -1.0));
 	final.h = sqrt(final.h);
@@ -105,12 +99,14 @@ void	first_intersect_cyl(t_tracer *rt, t_coord dir)
 	t_vec4		tmp;
 	t_cylinder	*start;
 	double		solve;
+	t_papb		papb;
 
 	start = rt->cyl;
 	while (start)
 	{
-		tmp = cylintersect(rt->camera->xyz, dir, pb(start),
-			pa(start), start->diameter / 2.0);
+		papb.pa = pa(start);
+		papb.pb = pb(start);
+		tmp = cylintersect(rt->camera->xyz, dir, papb, start->diameter / 2.0);
 		solve = min_tmp(tmp);
 		if ((!rt->solve && solve > EPSILON) || (solve < rt->solve && solve >
 		        EPSILON))

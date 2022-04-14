@@ -179,6 +179,12 @@ typedef struct s_tracer
 	unsigned char	flag;
 }				t_tracer;
 
+typedef struct s_papb
+{
+	t_coord pa;
+	t_coord pb;
+} t_papb;
+
 typedef struct s_calculation
 {
 	t_coord		ca;
