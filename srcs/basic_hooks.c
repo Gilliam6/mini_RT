@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:39:46 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/13 17:35:05 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/15 19:16:46 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ int	destroy_window(t_tracer *rt)
 	exit(0);
 }
 
-void new_light_xyz(t_tracer *rt)
+void	new_light_xyz(t_tracer *rt)
 {
-	struct timeval tv;
+	struct timeval	tv;
+
 	gettimeofday(&tv, 0);
 	rt->light->xyz.y = tv.tv_usec / 10000 % 20;
 	rt->light->xyz.x = tv.tv_usec / 10000 % 20;
 }
 
-void change_something(t_tracer *rt, int key)
+void	change_something(t_tracer *rt, int key)
 {
 	if (rt->flag == 1 && key == PLUS_BUTTON)
 		rt->sphere->diameter += 1;
@@ -44,13 +45,14 @@ void change_something(t_tracer *rt, int key)
 		rt->cyl->height -= 1;
 }
 
-void change_flag(t_tracer *rt, int key)
+void	change_flag(t_tracer *rt, int key)
 {
 	if (key == SPACE)
 		rt->flag = 0;
 	else
 		rt->flag = key - 5;
 }
+
 int	keyboard_hook(int key, t_tracer *rt)
 {
 	if (key == ESC_BUTTON)

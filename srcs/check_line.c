@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:40:05 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/13 17:35:38 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/15 19:17:00 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ int	fill_struct(char **split, t_tracer *rt)
 		return (fill_plane(split + 1, rt));
 	else if (rt->parsing_type == 6)
 		return (fill_cylinder(split + 1, rt));
-	// return (1);
-	return (0); // or 1?
+	return (0);
 }

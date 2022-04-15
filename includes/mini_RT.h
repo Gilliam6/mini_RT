@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:04:48 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/13 22:24:45 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/15 19:20:47 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,10 @@ typedef struct s_objects
 
 typedef struct s_fov
 {
-	double fov_x;
-	double fov_y;
-	double radiana;
-} t_fov;
+	double		fov_x;
+	double		fov_y;
+	double		radiana;
+}				t_fov;
 typedef struct s_tracer
 {
 	void			*mlx;
@@ -171,19 +171,18 @@ typedef struct s_tracer
 	t_coord			normal;
 	t_coord			point;
 	t_coord			final_coord;
-//	t_objects		*touched_object; //объект пересечение с которым ближе всего
 	t_coord			amb_color;
 	t_coord			final_color;
-	int 			move_x;
+	int				move_x;
 	int				move_y;
 	unsigned char	flag;
 }				t_tracer;
 
 typedef struct s_papb
 {
-	t_coord pa;
-	t_coord pb;
-} t_papb;
+	t_coord			pa;
+	t_coord			pb;
+}				t_papb;
 
 typedef struct s_calculation
 {
@@ -273,11 +272,14 @@ t_coord	init_vector_from_rgb(t_color color);
 
 t_vec2	ray_intersect( t_coord cam, t_coord dir, t_coord sphere, \
 	double radius);
-void		first_intersect_sphere(t_tracer *rt, t_coord dir);
-double	plaIntersect(t_coord cam, t_coord dir, t_plane *plane);
-void		first_intersect_plane(t_tracer *rt, t_coord dir);
-void		first_intersect_cyl(t_tracer *rt, t_coord dir);
+void	first_intersect_sphere(t_tracer *rt, t_coord dir);
+double	plaintersect(t_coord cam, t_coord dir, t_plane *plane);
+void	first_intersect_plane(t_tracer *rt, t_coord dir);
+void	first_intersect_cyl(t_tracer *rt, t_coord dir);
 int		check_intersects(t_tracer *rt, t_coord dir);
+t_coord	pa(t_cylinder *cyl);
+t_coord	pb(t_cylinder *cyl);
+t_vec4	cylintersect(t_coord cam, t_coord dir, t_papb papb, double r);
 
 //MAIN
 void	unexpected_exit(const char *str, t_tracer *rt);
