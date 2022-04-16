@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder_intersect.c                               :+:      :+:    :+:   */
+/*   cylinder_intersect_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 22:32:46 by pveeta            #+#    #+#             */
-/*   Updated: 2022/04/15 19:40:45 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/04/16 13:27:50 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/mini_RT.h"
+#include "../includes_bonus/mini_RT_bonus.h"
 
 t_coord	pa(t_cylinder *cyl)
 {

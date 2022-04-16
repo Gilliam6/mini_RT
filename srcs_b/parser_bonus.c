@@ -1,0 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 18:52:04 by pveeta            #+#    #+#             */
+/*   Updated: 2022/04/16 13:28:24 by pveeta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes_bonus/mini_RT_bonus.h"
+
+int	process_line(t_tracer *rt, char *line)
+{
+	char	**split;
+
+	split = ft_split(line, ' ');
+	if (!split)
+		return (0);
+	if (!split[0])
+		return (-1 + stop_parse(split));
+	if (!check_indentifier(split[0], rt))
+	{
+		printf("invalid type ID\n");
+		return (0 + stop_parse(split));
+	}
+	if (!fill_struct(split, rt))
+		return (0 + stop_parse(split));
+	return (!stop_parse(split));
+}
+
+int	parse_rt_file(t_tracer *rt, char *path)
+{
+	int		fd;
+	char	*line;
+	int		i;
+
+	fd = open(path, O_RDONLY);
+	while (get_next_line(fd, &line))
+	{
+		i = process_line(rt, line);
+		free(line);
+		if (i < 0)
+			continue ;
+		if (!i)
+			return (0);
+	}
+	i = process_line(rt, line);
+	free(line);
+	if (!i)
+		return (0);
+	close(fd);
+	return (1);
+}
